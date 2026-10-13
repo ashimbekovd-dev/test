@@ -27,6 +27,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
       <p className="mt-1 text-mute">{results.length} {plural(results.length)}</p>
       <div className="mt-6"><CatalogFilters query={query} categories={getCategories(products)} brands={getBrands(products)} /></div>
       <div className="mt-10">
+        <h2 className="sr-only">Товары</h2>
         {results.length ? (
           <ProductGrid products={results} eager={4} />
         ) : (
