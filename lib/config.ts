@@ -2,7 +2,7 @@ export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP ?? "77080503518
 
 export const CONTACTS = {
   storeName: "PIYOL'",
-  pickupAddress: "ТРЦ Forum Almaty, 2 этаж",
+  pickupAddress: "ул. Жандосова, 310г (мкр Таугуль-3)",
   city: "Алматы",
   hours: "ежедневно 10:00–22:00",
   phones: ["+7 708 050 35 18", "+7 708 050 25 18"],
@@ -13,5 +13,5 @@ export const CONTACTS = {
   instagram: "https://instagram.com/piyol.space",
   telegram: "https://t.me/piyolspace",
   facebook: "https://www.facebook.com/piyol.space",
-  mapUrl: "https://2gis.kz/almaty/search/Forum%20Almaty",
+  mapUrl: "https://go.2gis.com/02AH9",
 } as const;

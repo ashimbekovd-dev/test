@@ -19,7 +19,7 @@ export function buildOrderMessage(lines: CartLine[], total: number, form: OrderF
     .filter((l) => l.available && l.product)
     .map((l, i) => `${i + 1}) ${label(l.product!)} — ${l.qty} шт × ${formatPrice(l.product!.price)}`);
   const delivery =
-    form.delivery === "pickup" ? "самовывоз (ТРЦ Forum)" : `доставка, адрес: ${form.address?.trim() ?? ""}`;
+    form.delivery === "pickup" ? "самовывоз из магазина" : `доставка, адрес: ${form.address?.trim() ?? ""}`;
   const comment = form.comment?.trim();
   return [
     "Здравствуйте! Заказ с сайта PIYOL':",

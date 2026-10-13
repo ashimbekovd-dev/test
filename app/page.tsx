@@ -24,7 +24,7 @@ export default async function Home() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/catalog" className="btn bg-ink text-white hover:bg-ink/85">Смотреть каталог</Link>
-            <Link href="/contacts" className="btn border border-ink/30 hover:border-ink">Магазин в ТРЦ Forum</Link>
+            <Link href="/contacts" className="btn border border-ink/30 hover:border-ink">Магазин в Алматы</Link>
           </div>
         </div>
         {heroImage && (

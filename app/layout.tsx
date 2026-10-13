@@ -9,7 +9,7 @@ import { WhatsAppFab } from "@/components/WhatsAppFab";
 
 export const metadata: Metadata = {
   title: { default: "PIYOL' — корейская косметика в Алматы", template: "%s — PIYOL'" },
-  description: "Каталог корейской косметики PIYOL'. Заказ в WhatsApp, самовывоз из ТРЦ Forum Almaty.",
+  description: "Каталог корейской косметики PIYOL'. Заказ в WhatsApp, самовывоз из магазина в Алматы.",
 };
 
 export const viewport: Viewport = { themeColor: "#fbf7f4" };

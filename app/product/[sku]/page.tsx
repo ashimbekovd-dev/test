@@ -71,7 +71,7 @@ export default async function ProductPage({ params }: Props) {
             </section>
           )}
           <p className="mt-8 rounded-2xl bg-sage/60 p-4 text-[14px]">
-            Самовывоз из ТРЦ Forum Almaty, 2 этаж. Доставка по Алматы и Казахстану. <Link href="/delivery" className="underline underline-offset-2">Подробнее</Link>
+            Самовывоз из магазина в Алматы. Доставка по Алматы и Казахстану. <Link href="/delivery" className="underline underline-offset-2">Подробнее</Link>
           </p>
         </div>
       </div>

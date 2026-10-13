@@ -1,7 +1,7 @@
 """Assemble data/products.csv (the site's fallback catalog) from:
   data/products.catalog.csv  — names, categories (texts are merged at runtime)
   data/prices.csv            — price (discounted) and old_price (retail)
-  data/photos.csv            — photo file per sku, volume from the package, product line
+  data/photos.csv            — photo file per sku, volume from the package, product line, extra photos (|-separated)
 Only products that have both a price and a photo are written.
 """
 import csv
@@ -16,7 +16,9 @@ for sku, c in cat.items():
     if sku not in prices or sku not in photos:
         continue
     p, ph = prices[sku], photos[sku]
-    images = [f"/products/{sku.lower()}.jpg"] + ([f"/products/line-{ph['line']}.jpg"] if ph["line"] else [])
+    images = [f"/products/{sku.lower()}.jpg"]
+    images += [f"/products/{x}.jpg" for x in (ph.get("extra") or "").split("|") if x]
+    images += [f"/products/line-{ph['line']}.jpg"] if ph["line"] else []
     rows.append({**{k: "" for k in cols}, "sku": sku, "name": c["name"], "name_ru": c["name_ru"], "brand": c["brand"],
                  "category": c["category"], "price": p["price"], "old_price": p["old_price"],
                  "volume": ph["volume"], "images": "|".join(images)})

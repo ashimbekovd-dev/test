@@ -1,17 +1,35 @@
-sku,file,volume,line
-ACTIVE-HYDRA-MOIST-CLEANSING-FOAM,e7f21ec2-image.jpg,150 мл,active-hydra-moist
-ACTIVE-HYDRA-MOIST-EMULSION,736a12e1-image.jpg,100 мл,active-hydra-moist
-ACTIVE-HYDRA-MOIST-WRINKLE-EYE-CARE-CREAM,c0ff99fc-image.jpg,10 мл,active-hydra-moist
-ACTIVE-HYDRA-MOIST-SERUM,0d621886-image.jpg,50 мл,active-hydra-moist
-ACTIVE-HYDRA-MOIST-TONER,1a493cc4-image.jpg,120 мл,active-hydra-moist
-BB-GLOW-CREAM-BLEMISH-BALM,e9c7d972-image.jpg,40 мл,
-BIO-CELL-EXTRA-COLLAGEN-BOOSTER-CREAM,be1ad27c-image.jpg,50 мл,bio-cell-extra-collagen
-BIO-CELL-EXTRA-COLLAGEN-CLEANSING-FOAM,3b590f0f-image.jpg,150 мл,bio-cell-extra-collagen
-BIO-CELL-EXTRA-COLLAGEN-HYDRATING-EMULSION,79a902c0-image.jpg,100 мл,bio-cell-extra-collagen
-BIO-CELL-EXTRA-COLLAGEN-EYE-CREAM,abe6fb97-image.jpg,10 мл,bio-cell-extra-collagen
-BIO-CELL-EXTRA-COLLAGEN-LIPO-EXOSOME-AMPOULE,082b5c44-image.jpg,,bio-cell-extra-collagen
-BIO-CELL-EXTRA-COLLAGEN-TONER,3a16ec40-image.jpg,120 мл,bio-cell-extra-collagen
-BIOME-STEM-CELL-GLOW-CREAM,a52ba7aa-image.jpg,50 мл,
-DEEP-CLEANSING-PAD,a200a7d5-image.png,60 пэдов / 150 мл,
-EXO-POLYDEOX-BOOSTER-SERUM,8f73e7ec-image.jpg,50 мл,
-EXO-VITALITY-INTENSER-SERUM,2de4430e-image.jpg,50 мл,
+sku,file,volume,line,extra
+ACTIVE-HYDRA-MOIST-CLEANSING-FOAM,e7f21ec2-image.jpg,150 мл,active-hydra-moist,
+ACTIVE-HYDRA-MOIST-EMULSION,736a12e1-image.jpg,100 мл,active-hydra-moist,
+ACTIVE-HYDRA-MOIST-WRINKLE-EYE-CARE-CREAM,c0ff99fc-image.jpg,10 мл,active-hydra-moist,
+ACTIVE-HYDRA-MOIST-SERUM,0d621886-image.jpg,50 мл,active-hydra-moist,
+ACTIVE-HYDRA-MOIST-TONER,1a493cc4-image.jpg,120 мл,active-hydra-moist,
+BB-GLOW-CREAM-BLEMISH-BALM,e9c7d972-image.jpg,40 мл,,
+BIO-CELL-EXTRA-COLLAGEN-BOOSTER-CREAM,be1ad27c-image.jpg,50 мл,bio-cell-extra-collagen,
+BIO-CELL-EXTRA-COLLAGEN-CLEANSING-FOAM,3b590f0f-image.jpg,150 мл,bio-cell-extra-collagen,
+BIO-CELL-EXTRA-COLLAGEN-HYDRATING-EMULSION,79a902c0-image.jpg,100 мл,bio-cell-extra-collagen,
+BIO-CELL-EXTRA-COLLAGEN-EYE-CREAM,abe6fb97-image.jpg,10 мл,bio-cell-extra-collagen,
+BIO-CELL-EXTRA-COLLAGEN-LIPO-EXOSOME-AMPOULE,082b5c44-image.jpg,,bio-cell-extra-collagen,
+BIO-CELL-EXTRA-COLLAGEN-TONER,3a16ec40-image.jpg,120 мл,bio-cell-extra-collagen,
+BIOME-STEM-CELL-GLOW-CREAM,a52ba7aa-image.jpg,50 мл,,
+DEEP-CLEANSING-PAD,a200a7d5-image.png,60 пэдов / 150 мл,,
+EXO-POLYDEOX-BOOSTER-SERUM,8f73e7ec-image.jpg,50 мл,,
+EXO-VITALITY-INTENSER-SERUM,2de4430e-image.jpg,50 мл,,
+HAND-CREAM,c7752635-image.jpg,50 мл,,
+MONO-PEPTIDE-FLUID,c85df28c-image.jpg,ампулы 2 мл,,mono-peptide-fluid-2
+INTENSE-PURIFYING-ACNE-FOAM,8d1691cb-image.jpg,150 мл,intense-purifying-acne,
+INTENSE-PURIFYING-ACNE-TONER,71c3dabb-image.jpg,120 мл,intense-purifying-acne,
+INTENSE-PURIFYING-ACNE-SERUM,bdf416c7-image.jpg,50 мл,intense-purifying-acne,
+INTENSE-PURIFYING-ACNE-EMULSION,46514edd-image.jpg,100 мл,intense-purifying-acne,
+INTENSE-PURIFYING-HYDROCOLLOID-ACNE-PATCH,b25628c0-image.jpg,60 патчей (12 × 5),intense-purifying-acne,
+LIFTING-EYE-CARE-PROGRAM,62392961-image.jpg,,,
+NECK-EYE-REPAIR-SERUM,4ac118d7-image.jpg,50 мл,,
+PAPAYA-CLEANSING-ENZYME-POWDER,d3457e35-image.jpg,80 г,,
+RELIEF-SOOTHING-CLEANSING-FOAM,b76e503e-image.jpg,150 мл,relief-soothing,
+RELIEF-SOOTHING-TONER,523c61ca-image.jpg,120 мл,relief-soothing,
+RELIEF-SOOTHING-SERUM,241e0efd-image.jpg,50 мл,relief-soothing,
+RELIEF-SOOTHING-EMULSION,166a1703-image.jpg,100 мл,relief-soothing,
+RELIEF-SOOTHING-CREAM,2b15b7ca-image.jpg,50 мл,relief-soothing,
+RSS-BRIGHTENING-AMPOULE,4627c7d1-image.jpg,флаконы 10 мл,,
+SUN-BLOCK-TONE-CREAM-SPF50-PA,ea41e2c7-image.jpg,50 мл,,
+T1-COLLAGEN-REVERSE-VOLUME-PACK,5b2ada2b-image.jpg,60 г,,
