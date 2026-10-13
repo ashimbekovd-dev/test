@@ -1,0 +1,8 @@
+sku,name,name_ru,brand,category,price,old_price,volume,description,how_to_use,images,hit,in_stock
+SC-PBC-50,Probiotics Barrier Cream,Барьерный крем с пробиотиками,Scinic,Увлажнение,13490,15990,50 мл,"Крем для барьера.
+
+Второй абзац.",Нанести вечером,https://img.example/a.jpg|https://img.example/b.jpg,да,
+LM-FOAM-150,Gentle Cleansing Foam,Мягкая пенка,l'mele,Очищение,6990,,150 мл,,,https://img.example/c.jpg,,да
+BL-TONER,Hydra Toner,Увлажняющий тонер,belusta,Увлажнение,8490,,200 мл,,,https://img.example/d.jpg,нет,
+MM-HAIR,Hair Treatment,Маска для волос,moremo,Уход за волосами,9990,,180 мл,,,https://img.example/e.jpg,,
+WD-SERUM,Ёлочная сыворотка,,Wellderma,Дополнительный уход,11490,,30 мл,,,https://img.example/f.jpg,да,
