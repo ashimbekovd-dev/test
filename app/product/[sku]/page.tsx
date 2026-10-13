@@ -8,6 +8,7 @@ import { Price } from "@/components/Price";
 import { ProductGallery } from "@/components/ProductGallery";
 import { ProductGrid } from "@/components/ProductGrid";
 import { WhatsAppIcon } from "@/components/icons";
+import { displayName } from "@/lib/format";
 
 export const revalidate = 300;
 
@@ -19,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = await getProduct(decodeURIComponent((await params).sku));
-  return p ? { title: p.nameRu ?? p.name, description: p.description?.split("\n")[0] } : {};
+  return p ? { title: displayName(p.name), description: p.description?.split("\n")[0] } : {};
 }
 
 const paragraphs = (t?: string) => (t ?? "").split(/\n\s*\n/).map((s) => s.trim()).filter(Boolean);
@@ -31,7 +32,7 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
 
   const similar = products.filter((p) => p.category === product.category && p.sku !== product.sku).slice(0, 4);
-  const name = product.nameRu ?? product.name;
+  const name = displayName(product.name);
 
   return (
     <div className="wrap pt-6 md:pt-10">
@@ -47,7 +48,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="md:pt-8">
           <p className="text-mute">{product.brand}{product.volume ? `, ${product.volume}` : ""}</p>
           <h1 className="mt-2 text-[40px] md:text-[56px]">{name}</h1>
-          {product.nameRu && <p className="mt-2 text-mute">{product.name}</p>}
+          {product.nameRu && <p className="mt-3 text-lg text-mute">{product.nameRu}</p>}
           <div className="mt-6"><Price price={product.price} oldPrice={product.oldPrice} size="lg" /></div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">

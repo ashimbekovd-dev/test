@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const PAGES = ["/", "/catalog", "/product/DEMO-03", "/cart", "/about", "/delivery", "/contacts"];
+const PAGES = ["/", "/catalog", "/product/ACTIVE-HYDRA-MOIST-SERUM", "/cart", "/about", "/delivery", "/contacts"];
 
 for (const path of PAGES) {
   test(`no horizontal scroll on ${path}`, async ({ page }, info) => {
@@ -16,15 +16,15 @@ test("catalog → product → cart → WhatsApp message", async ({ page }) => {
     (window as unknown as { __opened: string[] }).__opened = [];
     window.open = (u?: string | URL) => { (window as unknown as { __opened: string[] }).__opened.push(String(u)); return null; };
   });
-  await page.goto("/catalog?category=" + encodeURIComponent("Увлажнение"));
-  await page.getByRole("link", { name: "Демо: Барьерный крем" }).first().click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Демо: Барьерный крем");
+  await page.goto("/catalog?category=" + encodeURIComponent("Линии ухода PIYOL'"));
+  await page.getByRole("link", { name: "Active Hydra-Moist Serum", exact: true }).first().click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Active Hydra-Moist Serum");
   const add = page.getByRole("button", { name: /В корзину|Добавлено/ }).first();
   await add.click();
   await expect(add).toHaveText("Добавлено");
   await add.click();
   await page.goto("/cart");
-  await expect(page.getByText("Итого:")).toContainText("26 980 ₸");
+  await expect(page.getByText("Итого:")).toContainText("29\u00a0980\u00a0₸");
 
   // Empty name is rejected before WhatsApp opens.
   await page.getByRole("button", { name: "Отправить заказ в WhatsApp" }).click();
@@ -38,8 +38,8 @@ test("catalog → product → cart → WhatsApp message", async ({ page }) => {
   const url = new URL(opened[0]);
   expect(url.origin + url.pathname).toBe("https://wa.me/77080503518");
   const text = url.searchParams.get("text") ?? "";
-  expect(text).toContain("1) Demo Барьерный крем — Демо, 50 мл — 2 шт × 13 490 ₸");
-  expect(text).toContain("Итого: 26 980 ₸");
+  expect(text).toContain("1) PIYOL' Active Hydra-Moist Serum — PIYOL', 50 мл — 2 шт × 14\u00a0990\u00a0₸");
+  expect(text).toContain("Итого: 29\u00a0980\u00a0₸");
   expect(text).toContain("Имя: Айгерим");
 });
 
@@ -49,7 +49,7 @@ test("cart survives blocked localStorage", async ({ page }) => {
   });
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/product/DEMO-03");
+  await page.goto("/product/ACTIVE-HYDRA-MOIST-SERUM");
   await page.getByRole("button", { name: "В корзину" }).first().click();
   await expect(page.getByRole("link", { name: /Корзина, товаров: 1/ })).toBeVisible();
   expect(errors).toEqual([]);

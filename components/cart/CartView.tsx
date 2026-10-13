@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { MAX_QTY, resolveCart } from "@/lib/cart/cart";
-import { formatPrice } from "@/lib/format";
+import { displayName, formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/products/types";
 import { buildOrderMessage, validateOrderForm, waLink, type OrderForm } from "@/lib/whatsapp";
 import { CONTACTS } from "@/lib/config";
@@ -50,7 +50,7 @@ export function CartView({ products }: { products: Product[] }) {
         <ul className="divide-y divide-line border-y border-line">
           {lines.map((l) => {
             const p = l.product;
-            const name = p ? p.nameRu ?? p.name : l.sku;
+            const name = p ? displayName(p.name) : l.sku;
             return (
               <li key={l.sku} className={`flex gap-4 py-5 ${l.available ? "" : "opacity-60"}`}>
                 <div className="relative h-24 w-20 shrink-0 arch bg-petal/60">

@@ -12,3 +12,9 @@ describe("formatPrice", () => {
     expect(formatPrice(1250000)).toBe("1 250 000 ₸");
   });
 });
+
+import { displayName } from "@/lib/format";
+describe("displayName", () => {
+  it("drops the PIYOL' prefix", () => expect(displayName("PIYOL' EXO Polydeox Booster Serum")).toBe("EXO Polydeox Booster Serum"));
+  it("keeps names of other brands", () => expect(displayName("Demo Крем")).toBe("Demo Крем"));
+});

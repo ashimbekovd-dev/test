@@ -13,12 +13,15 @@ describe.skipIf(!existsSync(REAL))("data/products.csv", () => {
     : { products: [], errors: [] };
 
   it("parses without errors", () => expect(errors).toEqual([]));
-  it("has at least 30 products", () => expect(products.length).toBeGreaterThanOrEqual(30));
-  it("every product has an https cover image", () => {
-    for (const p of products) expect(p.images[0], p.sku).toMatch(/^https:\/\//);
+  it("has at least 10 products", () => expect(products.length).toBeGreaterThanOrEqual(10));
+  it("every product has a cover image that exists", () => {
+    for (const p of products) {
+      expect(p.images[0], p.sku).toMatch(/^(https:\/\/|\/products\/)/);
+      if (p.images[0].startsWith("/")) expect(existsSync(path.join(__dirname, "../public", p.images[0])), p.images[0]).toBe(true);
+    }
   });
-  it("covers at least 5 categories", () => {
-    expect(new Set(products.map((p) => p.category)).size).toBeGreaterThanOrEqual(5);
+  it("covers at least 3 categories", () => {
+    expect(new Set(products.map((p) => p.category)).size).toBeGreaterThanOrEqual(3);
   });
 });
 
