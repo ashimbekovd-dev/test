@@ -1,0 +1,12 @@
+SKU,Name,name_ru,brand,category,price,old_price,volume,description,how_to_use,images,hit,in_stock
+SC-PBC-50,Probiotics Barrier Cream,Барьерный крем с пробиотиками,Scinic,Увлажнение,13 490 ₸,15990,50 мл,"Первый абзац.
+
+Второй абзац.",Нанести на чистую кожу.,https://img.example/a.jpg|https://img.example/b.jpg,да,
+PY-PDRN-30,PDRN Serum,Сыворотка с PDRN,PIYOL',Космецевтика PIYOL',"18 900",18900,30 мл,,,"https://img.example/c.jpg
+https://img.example/d.jpg",Да,да
+CL-FOAM-150,Gentle Cleansing Foam,Мягкая пенка для умывания,Round Lab,Очищение,"7490,00",,150 мл,,,https://img.example/e.jpg,yes,
+HD-SHAMPOO,Scalp Shampoo,Шампунь для кожи головы,Masil,Уход за волосами,9990,,300 мл,,,https://img.example/f.jpg,,нет
+,No SKU,,Brand,Очищение,1000,,,,,https://img.example/g.jpg,,
+NO-PRICE,No price,,Brand,Очищение,,,,,,https://img.example/h.jpg,,
+SC-PBC-50,Duplicate,,Scinic,Увлажнение,100,,,,,https://img.example/i.jpg,,
+MU-TINT,  Lip Tint  ,Тинт для губ,Rom&nd,Макияж,5490,,,,,https://img.example/j.jpg,1,
