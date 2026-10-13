@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { parseProductsCsv } from "./parse";
+import { mergeTexts, parseTextsCsv, type ProductTexts } from "./texts";
 import type { Product } from "./types";
 
 export const REVALIDATE_SECONDS = 300;
@@ -24,8 +25,17 @@ async function loadCsv(): Promise<string> {
   return readFile(file, "utf8");
 }
 
+let textsCache: Map<string, ProductTexts> | undefined;
+async function loadTexts(): Promise<Map<string, ProductTexts>> {
+  const file = path.join(process.cwd(), "data/products.catalog.csv");
+  textsCache ??= existsSync(file) ? parseTextsCsv(await readFile(file, "utf8")) : new Map();
+  return textsCache;
+}
+
 export async function getProducts(): Promise<Product[]> {
-  const { products, errors } = parseProductsCsv(await loadCsv());
+  const parsed = parseProductsCsv(await loadCsv());
+  const errors = parsed.errors;
+  const products = mergeTexts(parsed.products, await loadTexts());
   for (const e of errors) console.warn(`[products] row ${e.row}: ${e.reason}`);
   // An empty catalog is never a valid state: throwing makes Next keep the last good pages.
   if (products.length === 0) throw new Error("Products source has no products");
