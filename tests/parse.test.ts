@@ -77,3 +77,33 @@ describe("parseProductsCsv", () => {
     expect(products[0].nameRu).toBeUndefined();
   });
 });
+
+describe("parseProductsCsv — review fixes", () => {
+  it.each([["13490.00", 13490], ["13,490.00", 13490], ["13.490", 13490], ["13 490,50", 13490], ["13490.5", 13490]])(
+    "price %j → %d (never inflated)", (p, expected) => {
+      const { products, errors } = parseProductsCsv(csv(row({ price: p })));
+      expect(errors).toEqual([]);
+      expect(products[0].price).toBe(expected);
+    });
+
+  it("throws on an HTML page instead of CSV", () => {
+    expect(() => parseProductsCsv("<!DOCTYPE html><html><body>Sign in</body></html>")).toThrow(/not CSV/);
+  });
+
+  it("throws when required headers are missing", () => {
+    expect(() => parseProductsCsv("title,cost\nA,100")).toThrow(/missing columns/);
+  });
+
+  it("normalizes protocol-relative and http image URLs to https", () => {
+    const { products } = parseProductsCsv(csv(row({ images: "//static.tildacdn.com/a.jpg|http://static.tildacdn.com/b.jpg|/demo/1.svg" })));
+    expect(products[0].images).toEqual(["https://static.tildacdn.com/a.jpg", "https://static.tildacdn.com/b.jpg", "/demo/1.svg"]);
+  });
+
+  it.each(["Нет в наличии", "нет", "0", "0 шт", "No"])("hides product when in_stock is %j", (v) => {
+    expect(parseProductsCsv(csv(row({ in_stock: v }))).products).toEqual([]);
+  });
+
+  it.each(["", "да", "есть", "5 шт"])("keeps product when in_stock is %j", (v) => {
+    expect(parseProductsCsv(csv(row({ in_stock: v }))).products).toHaveLength(1);
+  });
+});

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MAX_QTY, resolveCart } from "@/lib/cart/cart";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/products/types";
@@ -19,6 +19,8 @@ export function CartView({ products }: { products: Product[] }) {
   const [form, setForm] = useState<OrderForm>({ name: "", delivery: "pickup", address: "", comment: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const set = (patch: Partial<OrderForm>) => setForm((f) => ({ ...f, ...patch }));
+  const nameRef = useRef<HTMLInputElement>(null);
+  const addressRef = useRef<HTMLInputElement>(null);
 
   if (!cart.ready) return <p className="mt-6 text-mute">Загружаем корзину…</p>;
 
@@ -36,7 +38,9 @@ export function CartView({ products }: { products: Product[] }) {
     e.preventDefault();
     const errs = validateOrderForm(form);
     setErrors(errs);
-    if (Object.keys(errs).length || count === 0) return;
+    if (errs.name) return nameRef.current?.focus();
+    if (errs.address) return addressRef.current?.focus();
+    if (count === 0) return;
     window.open(waLink(buildOrderMessage(lines, total, form)), "_blank", "noopener");
   };
 
@@ -90,8 +94,8 @@ export function CartView({ products }: { products: Product[] }) {
         <form onSubmit={submit} noValidate className="mt-6 space-y-4">
           <label className="block text-[14px]">
             Ваше имя
-            <input value={form.name} onChange={(e) => set({ name: e.target.value })} autoComplete="name" aria-invalid={!!errors.name} aria-describedby="err-name" className={field} />
-            {errors.name && <span id="err-name" className="mt-1 block text-[13px] text-rose">{errors.name}</span>}
+            <input ref={nameRef} value={form.name} onChange={(e) => set({ name: e.target.value })} autoComplete="name" aria-invalid={!!errors.name} aria-describedby={errors.name ? "err-name" : undefined} className={field} />
+            {errors.name && <span id="err-name" role="alert" className="mt-1 block text-[13px] text-rose">{errors.name}</span>}
           </label>
           <fieldset>
             <legend className="text-[14px]">Как получить</legend>
@@ -107,8 +111,8 @@ export function CartView({ products }: { products: Product[] }) {
           {form.delivery === "delivery" && (
             <label className="block text-[14px]">
               Адрес доставки
-              <input value={form.address} onChange={(e) => set({ address: e.target.value })} autoComplete="street-address" aria-invalid={!!errors.address} aria-describedby="err-address" className={field} />
-              {errors.address && <span id="err-address" className="mt-1 block text-[13px] text-rose">{errors.address}</span>}
+              <input ref={addressRef} value={form.address} onChange={(e) => set({ address: e.target.value })} autoComplete="street-address" aria-invalid={!!errors.address} aria-describedby={errors.address ? "err-address" : undefined} className={field} />
+              {errors.address && <span id="err-address" role="alert" className="mt-1 block text-[13px] text-rose">{errors.address}</span>}
             </label>
           )}
           <label className="block text-[14px]">

@@ -28,7 +28,8 @@ test("catalog → product → cart → WhatsApp message", async ({ page }) => {
 
   // Empty name is rejected before WhatsApp opens.
   await page.getByRole("button", { name: "Отправить заказ в WhatsApp" }).click();
-  await expect(page.getByText("Укажите имя")).toBeVisible();
+  await expect(page.getByRole("alert").filter({ hasText: "Укажите имя" })).toBeVisible();
+  await expect(page.getByLabel("Ваше имя")).toBeFocused();
 
   await page.getByLabel("Ваше имя").fill("Айгерим");
   await page.getByRole("button", { name: "Отправить заказ в WhatsApp" }).click();

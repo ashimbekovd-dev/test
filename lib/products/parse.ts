@@ -2,23 +2,48 @@ import Papa from "papaparse";
 import type { ParseError, ParseResult, Product } from "./types";
 
 const TRUE_VALUES = new Set(["да", "yes", "true", "1", "+"]);
-const FALSE_VALUES = new Set(["нет", "no", "false", "0", "-"]);
+const REQUIRED = ["sku", "name", "price", "images"];
 
-/** "13 490 ₸" | "13 490" | "13490,00" → 13490; anything else → NaN. */
+/** "нет", "Нет в наличии", "0", "0 шт", "no", "false", "-" → out of stock. */
+function isOutOfStock(raw: string): boolean {
+  const v = raw.toLowerCase();
+  return v.startsWith("нет") || /^no\b/.test(v) || v === "false" || v === "-" || /^0(\s|$)/.test(v);
+}
+
+/**
+ * "13 490 ₸" | "13 490" | "13490,00" | "13490.00" | "13,490.00" | "13.490" → 13490.
+ * Kopecks/tiyn are dropped, never folded into the integer part. Anything else → NaN.
+ */
 function parsePrice(raw: string): number {
-  const cleaned = raw.replace(/[\s  ₸тгТГ.]/g, "").replace(/,\d{1,2}$/, "");
-  return /^\d+$/.test(cleaned) ? Number(cleaned) : NaN;
+  let v = raw.replace(/[\s  ₸]|тг|ТГ/g, "");
+  v = v.replace(/[.,]\d{1,2}$/, ""); // decimal part
+  v = v.replace(/[.,](?=\d{3}(?:[.,]|$))/g, ""); // thousands separators
+  return /^\d+$/.test(v) ? Number(v) : NaN;
+}
+
+/** Tilda exports often use protocol-relative or http URLs; next/image only accepts https. */
+function normalizeImage(url: string): string {
+  if (url.startsWith("//")) return `https:${url}`;
+  if (url.startsWith("http://")) return `https://${url.slice(7)}`;
+  return url;
 }
 
 const optional = (v: string) => (v === "" ? undefined : v);
 
 export function parseProductsCsv(csv: string): ParseResult {
+  if (csv.trimStart().startsWith("<")) {
+    throw new Error("Products source is not CSV (got HTML). Is the Google Sheet published as CSV?");
+  }
   const parsed = Papa.parse<Record<string, string>>(csv.replace(/^﻿/, ""), {
     header: true,
     skipEmptyLines: "greedy",
     transformHeader: (h) => h.trim().toLowerCase(),
     transform: (v) => v.trim(),
   });
+
+  const fields = parsed.meta.fields ?? [];
+  const missingColumns = REQUIRED.filter((c) => !fields.includes(c));
+  if (missingColumns.length) throw new Error(`Products CSV missing columns: ${missingColumns.join(", ")}`);
 
   const products: Product[] = [];
   const errors: ParseError[] = [];
@@ -27,7 +52,7 @@ export function parseProductsCsv(csv: string): ParseResult {
   parsed.data.forEach((r, i) => {
     const rowNumber = i + 2; // header is row 1
     const get = (k: string) => r[k] ?? "";
-    const missing = ["sku", "name", "price", "images"].filter((k) => get(k) === "");
+    const missing = REQUIRED.filter((k) => get(k) === "");
     if (missing.length) {
       errors.push({ row: rowNumber, reason: `missing ${missing.join(", ")}` });
       return;
@@ -44,8 +69,7 @@ export function parseProductsCsv(csv: string): ParseResult {
     }
     seen.add(sku);
 
-    const stock = get("in_stock").toLowerCase();
-    if (FALSE_VALUES.has(stock)) return;
+    if (isOutOfStock(get("in_stock"))) return;
 
     const old = parsePrice(get("old_price"));
     products.push({
@@ -59,7 +83,7 @@ export function parseProductsCsv(csv: string): ParseResult {
       volume: optional(get("volume")),
       description: optional(get("description").replace(/\r\n/g, "\n")),
       howToUse: optional(get("how_to_use").replace(/\r\n/g, "\n")),
-      images: get("images").split(/[|\n]/).map((s) => s.trim()).filter(Boolean),
+      images: get("images").split(/[|\n]/).map((s) => s.trim()).filter(Boolean).map(normalizeImage),
       hit: TRUE_VALUES.has(get("hit").toLowerCase()),
       inStock: true,
     });

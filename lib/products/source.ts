@@ -27,6 +27,8 @@ async function loadCsv(): Promise<string> {
 export async function getProducts(): Promise<Product[]> {
   const { products, errors } = parseProductsCsv(await loadCsv());
   for (const e of errors) console.warn(`[products] row ${e.row}: ${e.reason}`);
+  // An empty catalog is never a valid state: throwing makes Next keep the last good pages.
+  if (products.length === 0) throw new Error("Products source has no products");
   return products;
 }
 
