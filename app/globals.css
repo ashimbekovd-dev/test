@@ -1,1 +1,77 @@
 @import "tailwindcss";
+
+@theme {
+  --color-milk: #fbf7f4;
+  --color-petal: #f2dcd7;
+  --color-petal-deep: #e7c4bd;
+  --color-rose: #a9524d;
+  --color-sage: #dde5d8;
+  --color-moss: #44573f;
+  --color-ink: #2a2524;
+  --color-mute: #6f6461;
+  --color-line: #e9dfda;
+
+  --font-display: "Cormorant Variable", "Cormorant", Georgia, serif;
+  --font-sans: "Manrope Variable", "Manrope", system-ui, sans-serif;
+
+  /* The signature shape: a soft arch, like the shoulder of a bottle. */
+  --radius-arch: 999px 999px 20px 20px;
+}
+
+@layer base {
+  html {
+    background: var(--color-milk);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-moss);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+}
+
+@utility arch {
+  border-radius: var(--radius-arch);
+  overflow: hidden;
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 768px) { padding-inline: 32px; }
+}
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 0.2s, color 0.2s, transform 0.1s;
+  &:active { transform: scale(0.98); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
