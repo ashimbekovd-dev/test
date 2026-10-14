@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
+/*
+  PIYOL' — дизайн-токены.
+  Молочный фон, пудрово-розовый и шалфейный акценты, графитовый текст.
+  Главный мотив — арка (зеркало туалетного столика): только в первом экране и плитках категорий.
+*/
+@theme {
+  --color-milk: #f8f4ef;
+  --color-pad: #efe7e1;
+  --color-powder: #ecd3cd;
+  --color-powder-deep: #a8606a;
+  --color-sage: #c5d0bd;
+  --color-sage-deep: #4d6150;
+  --color-graphite: #2c2b30;
+  --color-graphite-soft: #5e5c63;
+  --color-line: #e3dad3;
+
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Manrope Variable", "Manrope", system-ui, sans-serif;
+
+  --radius-card: 14px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-milk);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-milk);
+  color: var(--color-graphite);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sage-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.arch {
+  border-radius: 999px 999px 18px 18px;
+  overflow: hidden;
+}
+
+.container-page {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
+  .container-page { padding-inline: 32px; }
+}
+
+.prose-piyol p + p { margin-top: 0.9em; }
+.prose-piyol { white-space: pre-line; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-rise > * { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
+.hero-rise > *:nth-child(2) { animation-delay: .12s; }
+.hero-rise > *:nth-child(3) { animation-delay: .24s; }
