@@ -1,0 +1,33 @@
+name: Import products from piyolbeauty.kz
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/import-tilda.mjs
+      - .github/workflows/import-tilda.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Import from Tilda Store
+        run: node scripts/import-tilda.mjs data/products.csv
+      - name: Commit CSV if changed
+        run: |
+          if git diff --quiet -- data/products.csv && git ls-files --error-unmatch data/products.csv >/dev/null 2>&1; then
+            echo "Без изменений"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/products.csv
+          git commit -m "data: import catalog from piyolbeauty.kz"
+          git push
