@@ -19,7 +19,7 @@ describe("product texts", () => {
 
   it("fills missing texts from the catalog by sku", () => {
     const [p] = mergeTexts([base()], texts);
-    expect(p.description).toMatch(/^Линия Bio Relief Soothing Collection\./);
+    expect(p.description).toMatch(/^SOS-сыворотка для раздражённой кожи/);
     expect(p.howToUse).toContain("утром и вечером");
     expect(p.nameRu).toBe("Успокаивающая сыворотка для лица");
   });

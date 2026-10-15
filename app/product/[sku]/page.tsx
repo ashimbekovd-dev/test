@@ -6,6 +6,7 @@ import { buildSingleProductMessage, waLink } from "@/lib/whatsapp";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { TrustStrip } from "@/components/TrustStrip";
+import { RichText } from "@/components/RichText";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
 import { Price } from "@/components/Price";
@@ -98,13 +99,13 @@ export default async function ProductPage({ params }: Props) {
           {paragraphs(product.description).length > 0 && (
             <section className="mt-10 max-w-prose">
               <h2 className="text-2xl">Описание</h2>
-              {paragraphs(product.description).map((t, i) => <p key={i} className="mt-3">{t}</p>)}
+              <RichText text={product.description} className="mt-3" />
             </section>
           )}
           {paragraphs(product.howToUse).length > 0 && (
             <section className="mt-8 max-w-prose">
               <h2 className="text-2xl">Как применять</h2>
-              {paragraphs(product.howToUse).map((t, i) => <p key={i} className="mt-3">{t}</p>)}
+              <RichText text={product.howToUse} className="mt-3" />
             </section>
           )}
           <div className="mt-8"><TrustStrip compact /></div>
