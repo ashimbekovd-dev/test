@@ -6,6 +6,8 @@ import { buildSingleProductMessage, waLink } from "@/lib/whatsapp";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { TrustStrip } from "@/components/TrustStrip";
+import { BeforeAfterGallery } from "@/components/BeforeAfter";
+import { casesFor } from "@/lib/cases";
 import { Price } from "@/components/Price";
 import { ProductGallery } from "@/components/ProductGallery";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -46,6 +48,7 @@ export default async function ProductPage({ params }: Props) {
   const similar = line
     ? ritual.filter((p) => p.sku !== product.sku)
     : products.filter((p) => p.category === product.category && p.sku !== product.sku).slice(0, 4);
+  const cases = casesFor({ sku: product.sku, line: product.line });
   const concerns = product.concerns.map(getConcern).filter((c) => c !== undefined);
   const name = displayName(product.name);
 
@@ -110,6 +113,13 @@ export default async function ProductPage({ params }: Props) {
           </p>
         </div>
       </div>
+
+      {cases.length > 0 && (
+        <section className="mt-20" aria-labelledby="product-cases">
+          <h2 id="product-cases" className="text-[36px]">Результаты клиенток</h2>
+          <div className="mt-6"><BeforeAfterGallery cases={cases} columns={2} /></div>
+        </section>
+      )}
 
       {similar.length > 0 && (
         <section className="mt-20">

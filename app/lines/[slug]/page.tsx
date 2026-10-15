@@ -10,6 +10,8 @@ import { displayName, formatPrice } from "@/lib/format";
 import { getLine, LINES, lineProducts, stepOf } from "@/lib/lines";
 import { getProducts } from "@/lib/products/source";
 import { buildRitualMessage, waLink } from "@/lib/whatsapp";
+import { BeforeAfterGallery } from "@/components/BeforeAfter";
+import { casesFor } from "@/lib/cases";
 
 export const revalidate = 300;
 
@@ -93,6 +95,13 @@ export default async function LinePage({ params }: Props) {
           </ul>
         </div>
       </section>
+
+      {casesFor({ line: line.slug }).length > 0 && (
+        <section className="mt-16 md:mt-24" aria-labelledby="line-cases">
+          <h2 id="line-cases" className="text-[40px] md:text-[52px]">До и после</h2>
+          <div className="mt-6"><BeforeAfterGallery cases={casesFor({ line: line.slug })} columns={2} /></div>
+        </section>
+      )}
 
       <section className="mt-16 md:mt-24" aria-labelledby="steps">
         <h2 id="steps" className="text-[40px] md:text-[52px]">Шаги ритуала</h2>

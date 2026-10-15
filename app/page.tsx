@@ -2,11 +2,13 @@ import Link from "next/link";
 import { getCategories, getProducts } from "@/lib/products/source";
 import { CONTACTS } from "@/lib/config";
 import { ProductGrid } from "@/components/ProductGrid";
-import { ProductImage } from "@/components/ProductImage";
 import { HeroVisual } from "@/components/HeroVisual";
 import { ConcernPicker } from "@/components/ConcernPicker";
 import { LineCards } from "@/components/LineCards";
 import { TrustStrip } from "@/components/TrustStrip";
+import { CategoryBento } from "@/components/CategoryBento";
+import { BeforeAfterGallery } from "@/components/BeforeAfter";
+import { CASES } from "@/lib/cases";
 
 export const revalidate = 300;
 
@@ -15,7 +17,6 @@ export default async function Home() {
   const categories = getCategories(products);
   const hits = products.filter((p) => p.hit).slice(0, 4);
   const sale = products.filter((p) => p.oldPrice).slice(0, 4);
-  const cover = (c: string) => products.find((p) => p.category === c)?.images[0];
 
   return (
     <>
@@ -50,20 +51,17 @@ export default async function Home() {
         </Link>
       </section>
 
-      <section className="wrap mt-20" aria-labelledby="cats">
-        <h2 id="cats" className="text-[40px] md:text-[52px]">Категории</h2>
-        <ul className="-mx-4 mt-6 flex snap-x gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0 lg:grid-cols-6">
-          {categories.map((c) => (
-            <li key={c} className="w-36 shrink-0 snap-start md:w-auto">
-              <Link href={`/catalog?category=${encodeURIComponent(c)}`} className="group block">
-                <div className="relative aspect-[3/4] arch bg-sage">
-                  {cover(c) && <ProductImage src={cover(c)!} alt="" sizes="(min-width: 1024px) 16vw, 144px" />}
-                </div>
-                <p className="mt-2 text-[14px] font-medium group-hover:text-moss">{c}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <section className="wrap mt-20 md:mt-28" aria-labelledby="cases">
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
+          <h2 id="cases" className="text-[40px] md:text-[52px]">Результаты клиенток</h2>
+          <p className="max-w-sm text-[15px] text-mute">Более 10 000 реальных кейсов до и после. Здесь — несколько из них, по линиям и средствам.</p>
+        </div>
+        <div className="mt-8"><BeforeAfterGallery cases={CASES} /></div>
+      </section>
+
+      <section className="wrap mt-20 md:mt-28" aria-labelledby="cats">
+        <h2 id="cats" className="text-[40px] md:text-[52px]">Разделы каталога</h2>
+        <div className="mt-8"><CategoryBento categories={categories} products={products} /></div>
       </section>
 
       <section id="lines" className="wrap mt-20 scroll-mt-24 md:mt-28" aria-labelledby="lines-title">

@@ -88,3 +88,13 @@ test("панель покупки появляется на телефоне п�
   await page.evaluate(() => scrollTo(0, 1600));
   await expect(bar).toHaveAttribute("aria-hidden", "false");
 });
+
+test("кейсы до/после: открываются крупно и ведут к ритуалу", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: /Открыть фото: Bio Cell Extra Collagen/ }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("link", { name: "Смотреть ритуал" }).click();
+  await expect(page).toHaveURL(/\/lines\/bio-cell-extra-collagen$/);
+  await expect(page.getByRole("heading", { name: "До и после" })).toBeVisible();
+});
