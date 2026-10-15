@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-line bg-sage/50">
       <div className="wrap grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <Logo />
+          <Logo className="h-10" />
           <p className="mt-4 max-w-xs text-mute">Корейская косметика в Алматы. Подберём уход и ответим на вопросы в WhatsApp.</p>
         </div>
         <div>
