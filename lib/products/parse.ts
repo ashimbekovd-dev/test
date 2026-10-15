@@ -1,5 +1,7 @@
 import Papa from "papaparse";
 import type { ParseError, ParseResult, Product } from "./types";
+import { parseConcerns } from "@/lib/concerns";
+import { parseLine } from "@/lib/lines";
 
 const TRUE_VALUES = new Set(["да", "yes", "true", "1", "+"]);
 const REQUIRED = ["sku", "name", "price", "images"];
@@ -86,6 +88,8 @@ export function parseProductsCsv(csv: string): ParseResult {
       images: get("images").split(/[|\n]/).map((s) => s.trim()).filter(Boolean).map(normalizeImage),
       hit: TRUE_VALUES.has(get("hit").toLowerCase()),
       inStock: true,
+      concerns: parseConcerns(get("concerns")),
+      line: parseLine(get("line")),
     });
   });
 

@@ -4,6 +4,8 @@ import { CONTACTS } from "@/lib/config";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
 import { HeroVisual } from "@/components/HeroVisual";
+import { ConcernPicker } from "@/components/ConcernPicker";
+import { LineCards } from "@/components/LineCards";
 
 export const revalidate = 300;
 
@@ -27,7 +29,13 @@ export default async function Home() {
             <Link href="/contacts" className="btn border border-ink/30 hover:border-ink">Магазин в Алматы</Link>
           </div>
         </div>
-        <HeroVisual lineHref={`/catalog?q=${encodeURIComponent("Hydra-Moist")}`} />
+        <HeroVisual lineHref="/lines/active-hydra-moist" />
+      </section>
+
+      <section className="wrap mt-20 md:mt-28" aria-labelledby="concerns">
+        <h2 id="concerns" className="text-[40px] md:text-[52px]">Что хотите решить?</h2>
+        <p className="mt-2 max-w-xl text-[16px] text-mute">Начните с задачи кожи — покажем средства, которые с ней работают.</p>
+        <div className="mt-8"><ConcernPicker products={products} /></div>
       </section>
 
       <section className="wrap mt-20" aria-labelledby="cats">
@@ -44,6 +52,12 @@ export default async function Home() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section id="lines" className="wrap mt-20 scroll-mt-24 md:mt-28" aria-labelledby="lines-title">
+        <h2 id="lines-title" className="text-[40px] md:text-[52px]">Линии ухода</h2>
+        <p className="mt-2 max-w-xl text-[16px] text-mute">Готовые ритуалы из нескольких шагов: от очищения до крема. Можно взять целиком или по одному средству.</p>
+        <div className="mt-8"><LineCards products={products} /></div>
       </section>
 
       {hits.length > 0 && (

@@ -19,7 +19,7 @@ describe("parseProductsCsv", () => {
       sku: "SC-PBC-50", name: "Probiotics Barrier Cream", nameRu: "Барьерный крем с пробиотиками",
       brand: "Scinic", category: "Увлажнение", price: 13490, oldPrice: 15990, volume: "50 мл",
       description: "Крем для барьера.\n\nВторой абзац.", howToUse: "Нанести вечером",
-      images: ["https://img.example/a.jpg", "https://img.example/b.jpg"], hit: true, inStock: true,
+      images: ["https://img.example/a.jpg", "https://img.example/b.jpg"], hit: true, inStock: true, concerns: [], line: undefined,
     });
     expect(products).toHaveLength(5);
   });
@@ -105,5 +105,21 @@ describe("parseProductsCsv — review fixes", () => {
 
   it.each(["", "да", "есть", "5 шт"])("keeps product when in_stock is %j", (v) => {
     expect(parseProductsCsv(csv(row({ in_stock: v }))).products).toHaveLength(1);
+  });
+});
+
+describe("concerns and line columns", () => {
+  const head = "sku,name,brand,category,price,images,concerns,line";
+  it("принимает slug'и и названия задач, любые разделители, отбрасывает неизвестное", () => {
+    const { products } = parseProductsCsv(
+      `${head}\nA,A,B,C,100,https://i/a.jpg,"firmness; Пигментация и тон | что-то, firmness",Active Hydra-Moist`,
+    );
+    expect(products[0].concerns).toEqual(["firmness", "pigment"]);
+    expect(products[0].line).toBe("active-hydra-moist");
+  });
+  it("без колонок — пустые задачи и нет линии", () => {
+    const { products } = parseProductsCsv("sku,name,brand,category,price,images\nA,A,B,C,100,https://i/a.jpg");
+    expect(products[0].concerns).toEqual([]);
+    expect(products[0].line).toBeUndefined();
   });
 });

@@ -9,6 +9,8 @@ import { ProductGallery } from "@/components/ProductGallery";
 import { ProductGrid } from "@/components/ProductGrid";
 import { WhatsAppIcon } from "@/components/icons";
 import { displayName } from "@/lib/format";
+import { getConcern } from "@/lib/concerns";
+import { getLine, lineProducts, stepOf } from "@/lib/lines";
 
 export const revalidate = 300;
 
@@ -31,7 +33,12 @@ export default async function ProductPage({ params }: Props) {
   const product = products.find((p) => p.sku === sku);
   if (!product) notFound();
 
-  const similar = products.filter((p) => p.category === product.category && p.sku !== product.sku).slice(0, 4);
+  const line = getLine(product.line);
+  const ritual = line ? lineProducts(products, line.slug) : [];
+  const similar = line
+    ? ritual.filter((p) => p.sku !== product.sku)
+    : products.filter((p) => p.category === product.category && p.sku !== product.sku).slice(0, 4);
+  const concerns = product.concerns.map(getConcern).filter((c) => c !== undefined);
   const name = displayName(product.name);
 
   return (
@@ -49,6 +56,15 @@ export default async function ProductPage({ params }: Props) {
           <p className="text-mute">{product.brand}{product.volume ? `, ${product.volume}` : ""}</p>
           <h1 className="mt-2 text-[40px] md:text-[56px]">{name}</h1>
           {product.nameRu && <p className="mt-3 text-lg text-mute">{product.nameRu}</p>}
+          {concerns.length > 0 && (
+            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Для каких задач">
+              {concerns.map((c) => (
+                <li key={c.slug}>
+                  <Link href={`/catalog?concern=${c.slug}`} className="block rounded-full bg-sage/70 px-3 py-1 text-[13px] hover:bg-sage">{c.title}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="mt-6"><Price price={product.price} oldPrice={product.oldPrice} size="lg" /></div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -57,6 +73,16 @@ export default async function ProductPage({ params }: Props) {
               <WhatsAppIcon className="size-5" /> Заказать в WhatsApp
             </a>
           </div>
+
+          {line && (
+            <Link href={`/lines/${line.slug}`} className="mt-8 flex items-center justify-between gap-4 rounded-2xl bg-petal/55 p-4 hover:bg-petal">
+              <span>
+                <span className="block text-[13px] text-mute">Шаг {ritual.findIndex((p) => p.sku === product.sku) + 1} из {ritual.length}: {stepOf(product).label.toLowerCase()}</span>
+                <span className="font-medium">Ритуал {line.name}</span>
+              </span>
+              <span className="shrink-0 text-[14px] underline underline-offset-4">Весь ритуал</span>
+            </Link>
+          )}
 
           {paragraphs(product.description).length > 0 && (
             <section className="mt-10 max-w-prose">
@@ -78,7 +104,7 @@ export default async function ProductPage({ params }: Props) {
 
       {similar.length > 0 && (
         <section className="mt-20">
-          <h2 className="text-[36px]">Ещё из раздела «{product.category}»</h2>
+          <h2 className="text-[36px]">{line ? `Другие шаги ритуала ${line.name}` : `Ещё из раздела «${product.category}»`}</h2>
           <div className="mt-6"><ProductGrid products={similar} /></div>
         </section>
       )}

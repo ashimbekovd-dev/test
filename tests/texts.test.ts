@@ -6,7 +6,7 @@ import type { Product } from "@/lib/products/types";
 
 const base = (o: Partial<Product> = {}): Product => ({
   sku: "RELIEF-SOOTHING-SERUM", name: "PIYOL' Relief Soothing Serum", brand: "PIYOL'", category: "Линии ухода PIYOL'",
-  price: 9990, images: ["https://i/a.jpg"], hit: false, inStock: true, ...o,
+  price: 9990, images: ["https://i/a.jpg"], hit: false, inStock: true, concerns: [], ...o,
 });
 
 describe("product texts", () => {

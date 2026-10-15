@@ -1,12 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { buildOrderMessage, buildSingleProductMessage, validateOrderForm, waLink } from "@/lib/whatsapp";
+import { buildOrderMessage, buildRitualMessage, buildSingleProductMessage, validateOrderForm, waLink } from "@/lib/whatsapp";
 import { resolveCart } from "@/lib/cart/cart";
 import type { Product } from "@/lib/products/types";
 
 const cream: Product = { sku: "SC", name: "Probiotics Barrier Cream", brand: "Scinic", category: "Увлажнение",
-  price: 13490, volume: "50 мл", images: ["/a.svg"], hit: false, inStock: true };
+  price: 13490, volume: "50 мл", images: ["/a.svg"], hit: false, inStock: true, concerns: [] };
 const foam: Product = { sku: "LM", name: "Gentle Foam", brand: "l'mele", category: "Очищение",
-  price: 6990, images: ["/b.svg"], hit: false, inStock: true };
+  price: 6990, images: ["/b.svg"], hit: false, inStock: true, concerns: [] };
 const nb = (s: string) => s.replace(/ /g, " ");
 
 describe("buildOrderMessage", () => {
@@ -60,5 +60,14 @@ describe("validateOrderForm", () => {
   });
   it("passes a valid pickup order", () => {
     expect(validateOrderForm({ name: "Айгерим", delivery: "pickup" })).toEqual({});
+  });
+});
+
+describe("buildRitualMessage", () => {
+  it("перечисляет шаги и считает итог", () => {
+    const msg = buildRitualMessage("Test Line", [cream, foam]);
+    expect(msg.split("\n")[0]).toBe("Здравствуйте! Хочу заказать ритуал Test Line:");
+    expect(msg).toContain("2) Gentle Foam — l'mele");
+    expect(msg).toContain("Итого: 20\u00a0480\u00a0₸");
   });
 });

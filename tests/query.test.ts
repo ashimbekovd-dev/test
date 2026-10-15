@@ -4,6 +4,7 @@ import path from "node:path";
 import { parseProductsCsv } from "@/lib/products/parse";
 import { queryCatalog, parseCatalogQuery } from "@/lib/catalog/query";
 import { getCategories, getBrands } from "@/lib/products/source";
+import type { Product } from "@/lib/products/types";
 
 const { products } = parseProductsCsv(readFileSync(path.join(__dirname, "fixtures/products.csv"), "utf8"));
 const skus = (ps: { sku: string }[]) => ps.map((p) => p.sku);
@@ -58,5 +59,20 @@ describe("getCategories / getBrands", () => {
   });
   it("lists brands alphabetically without duplicates", () => {
     expect(getBrands(products)).toEqual(["belusta", "l'mele", "moremo", "Scinic", "Wellderma"]);
+  });
+});
+
+describe("concern filter", () => {
+  const mk = (sku: string, concerns: string[]): Product =>
+    ({ sku, name: sku, brand: "B", category: "C", price: 1, images: ["/a"], hit: false, inStock: true, concerns });
+  const list = [mk("A", ["firmness"]), mk("B", ["moisture", "firmness"]), mk("C", [])];
+  it("оставляет только товары с этой задачей", () => {
+    expect(queryCatalog([...list], { concern: "firmness" }).map((p) => p.sku)).toEqual(["A", "B"]);
+  });
+  it("неизвестная задача → пусто", () => {
+    expect(queryCatalog([...list], { concern: "nope" })).toEqual([]);
+  });
+  it("читается из URL", () => {
+    expect(parseCatalogQuery({ concern: "pigment" }).concern).toBe("pigment");
   });
 });

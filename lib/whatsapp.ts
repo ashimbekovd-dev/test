@@ -38,3 +38,13 @@ export function buildSingleProductMessage(p: Product): string {
 export function waLink(text: string, number: string = WHATSAPP_NUMBER): string {
   return `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 }
+
+/** Заказ целого ритуала одной кнопкой со страницы линии. */
+export function buildRitualMessage(lineName: string, products: Product[]): string {
+  const total = products.reduce((s, p) => s + p.price, 0);
+  return [
+    `Здравствуйте! Хочу заказать ритуал ${lineName}:`,
+    ...products.map((p, i) => `${i + 1}) ${label(p)} — ${formatPrice(p.price)}`),
+    `Итого: ${formatPrice(total)}`,
+  ].join("\n");
+}

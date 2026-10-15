@@ -12,6 +12,10 @@ export type Product = {
   images: string[];
   hit: boolean;
   inStock: boolean;
+  /** задачи кожи (slug'и из lib/concerns) */
+  concerns: string[];
+  /** slug линии ухода из lib/lines */
+  line?: string;
 };
 
 export type ParseError = { row: number; reason: string };

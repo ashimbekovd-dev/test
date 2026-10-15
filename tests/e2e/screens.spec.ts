@@ -54,3 +54,15 @@ test("cart survives blocked localStorage", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Корзина, товаров: 1/ })).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("задача кожи → каталог; линия → весь ритуал в корзину", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: /Упругость и морщины/ }).first().click();
+  await expect(page).toHaveURL(/concern=firmness/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Упругость и морщины");
+
+  await page.goto("/lines/active-hydra-moist");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Active Hydra-Moist");
+  await page.getByRole("button", { name: /Весь ритуал в корзину/ }).click();
+  await expect(page.getByRole("link", { name: /Корзина, товаров: 5/ })).toBeVisible();
+});

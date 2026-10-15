@@ -4,6 +4,7 @@ import { getBrands, getCategories, getProducts } from "@/lib/products/source";
 import { parseCatalogQuery, queryCatalog } from "@/lib/catalog/query";
 import { CatalogFilters } from "@/components/CatalogFilters";
 import { ProductGrid } from "@/components/ProductGrid";
+import { getConcern } from "@/lib/concerns";
 
 export const revalidate = 300;
 export const metadata: Metadata = { title: "Каталог" };
@@ -19,11 +20,13 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
   const query = parseCatalogQuery(await searchParams);
   const products = await getProducts();
   const results = queryCatalog(products, query);
-  const title = query.category ?? (query.q ? `Поиск: ${query.q}` : "Каталог");
+  const concern = getConcern(query.concern);
+  const title = concern?.title ?? query.category ?? (query.q ? `Поиск: ${query.q}` : "Каталог");
 
   return (
     <div className="wrap pt-8 md:pt-12">
       <h1 className="text-[44px] md:text-[64px]">{title}</h1>
+      {concern && <p className="mt-3 max-w-xl text-[17px]">{concern.lead}</p>}
       <p className="mt-1 text-mute">{results.length} {plural(results.length)}</p>
       <div className="mt-6"><CatalogFilters query={query} categories={getCategories(products)} brands={getBrands(products)} /></div>
       <div className="mt-10">

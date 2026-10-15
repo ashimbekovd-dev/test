@@ -1,7 +1,7 @@
 import type { Product } from "@/lib/products/types";
 
 export type CatalogSort = "default" | "price-asc" | "price-desc";
-export type CatalogQuery = { category?: string; brand?: string; q?: string; sort?: CatalogSort };
+export type CatalogQuery = { category?: string; brand?: string; concern?: string; q?: string; sort?: CatalogSort };
 
 const SORTS: CatalogSort[] = ["default", "price-asc", "price-desc"];
 const norm = (s: string) => s.toLocaleLowerCase("ru").replace(/ё/g, "е").trim();
@@ -10,11 +10,13 @@ export function queryCatalog(products: Product[], query: CatalogQuery): Product[
   const category = query.category && norm(query.category);
   const brand = query.brand && norm(query.brand);
   const q = query.q && norm(query.q);
+  const concern = query.concern && norm(query.concern);
 
   const filtered = products.filter(
     (p) =>
       (!category || norm(p.category) === category) &&
       (!brand || norm(p.brand) === brand) &&
+      (!concern || p.concerns.includes(concern)) &&
       (!q || norm(`${p.name} ${p.nameRu ?? ""} ${p.brand}`).includes(q)),
   );
 
@@ -38,7 +40,7 @@ export function parseCatalogQuery(params: Params): CatalogQuery {
   };
   const sort = first("sort") as CatalogSort | undefined;
   const out: CatalogQuery = { sort: sort && SORTS.includes(sort) ? sort : "default" };
-  for (const k of ["category", "brand", "q"] as const) {
+  for (const k of ["category", "brand", "concern", "q"] as const) {
     const v = first(k);
     if (v) out[k] = v;
   }

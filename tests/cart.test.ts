@@ -3,7 +3,7 @@ import { addItem, setQty, removeItem, resolveCart } from "@/lib/cart/cart";
 import type { Product } from "@/lib/products/types";
 
 const p = (sku: string, price: number, extra: Partial<Product> = {}): Product => ({
-  sku, name: sku, brand: "B", category: "C", price, images: ["/x.svg"], hit: false, inStock: true, ...extra,
+  sku, name: sku, brand: "B", category: "C", price, images: ["/x.svg"], hit: false, inStock: true, concerns: [], ...extra,
 });
 
 describe("cart item operations", () => {
