@@ -62,8 +62,8 @@ export function BeforeAfterGallery({ cases, columns = 4 }: { cases: Case[]; colu
       >
         {current && (
           <div className="p-3 md:p-4">
-            <div className="relative overflow-hidden rounded-[20px]">
-              <Image src={current.image} alt={`${current.title}: до и после — ${current.result.toLowerCase()}`} width={current.width} height={current.height} sizes="900px" className="h-auto max-h-[72dvh] w-full object-contain" />
+            <div className="relative mx-auto w-fit overflow-hidden rounded-[20px]">
+              <Image src={current.image} alt={`${current.title}: до и после — ${current.result.toLowerCase()}`} width={current.width} height={current.height} sizes="900px" className="h-auto max-h-[72dvh] w-auto max-w-full" />
               <Labels split={current.split} />
             </div>
             <div className="flex flex-wrap items-center justify-between gap-3 px-2 pb-1 pt-4">

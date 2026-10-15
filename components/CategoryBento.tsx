@@ -73,6 +73,8 @@ function Count({ n, light }: { n: number; light?: boolean }) {
   return <span className={`text-[13px] ${light ? "text-milk/70" : "text-mute"}`}>{n} {plural(n)}</span>;
 }
 
+/* Сдвиг при наведении — на самой картинке, не на обёртке: трансформация обёртки
+   изолирует слой, и mix-blend-multiply перестаёт «растворять» белый фон фото. */
 function BigTile({ tile, tone }: { tile: Tile; tone: string }) {
   return (
     <Link href={tile.href} className={`group relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-[32px] p-6 md:p-8 ${tone}`}>
@@ -83,8 +85,8 @@ function BigTile({ tile, tone }: { tile: Tile; tone: string }) {
         <span className="text-[14px] underline-offset-4 group-hover:underline">Смотреть</span>
       </span>
       {tile.cover && (
-        <span className="absolute -bottom-4 right-0 h-[72%] w-[62%] transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02]">
-          <ProductImage src={tile.cover} alt="" sizes="(min-width: 768px) 30vw, 60vw" className="object-contain object-bottom mix-blend-multiply" />
+        <span className="absolute -bottom-4 right-0 h-[72%] w-[62%]">
+          <ProductImage src={tile.cover} alt="" sizes="(min-width: 768px) 30vw, 60vw" className="object-contain object-bottom mix-blend-multiply transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02]" />
         </span>
       )}
     </Link>
@@ -100,8 +102,8 @@ function WideTile({ tile }: { tile: Tile }) {
         <span className="mt-auto pt-4"><Count n={tile.count} /></span>
       </span>
       {tile.cover && (
-        <span className="absolute inset-y-3 right-2 w-[48%] transition-transform duration-500 group-hover:scale-[1.03]">
-          <ProductImage src={tile.cover} alt="" sizes="(min-width: 768px) 22vw, 45vw" className="object-contain mix-blend-multiply" />
+        <span className="absolute inset-y-3 right-2 w-[48%]">
+          <ProductImage src={tile.cover} alt="" sizes="(min-width: 768px) 22vw, 45vw" className="object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.03]" />
         </span>
       )}
     </Link>
@@ -120,8 +122,8 @@ function SmallTile({ tile, tone }: { tile: Tile; tone: string }) {
         </span>
       )}
       {tile.cover && !tile.framed && (
-        <span className="absolute -bottom-2 -right-2 h-[62%] w-[70%] transition-transform duration-500 group-hover:-translate-y-1">
-          <ProductImage src={tile.cover} alt="" sizes="(min-width: 768px) 15vw, 35vw" className="object-contain object-bottom mix-blend-multiply" />
+        <span className="absolute -bottom-2 -right-2 h-[62%] w-[70%]">
+          <ProductImage src={tile.cover} alt="" sizes="(min-width: 768px) 15vw, 35vw" className="object-contain object-bottom mix-blend-multiply transition-transform duration-500 group-hover:-translate-y-1" />
         </span>
       )}
       {dark && <span className="relative z-10 mt-auto text-[14px] underline underline-offset-4">Открыть</span>}
