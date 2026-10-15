@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const PAGES = ["/", "/catalog", "/product/ACTIVE-HYDRA-MOIST-SERUM", "/cart", "/about", "/delivery", "/contacts"];
+const PAGES = ["/", "/catalog", "/product/ACTIVE-HYDRA-MOIST-SERUM", "/product/INTENSE-PURIFYING-ACNE-SERUM", "/lines/intense-purifying-acne", "/cart", "/about", "/delivery", "/contacts"];
 
 for (const path of PAGES) {
   test(`no horizontal scroll on ${path}`, async ({ page }, info) => {
@@ -97,4 +97,17 @@ test("кейсы до/после: открываются крупно и вед�
   await dialog.getByRole("link", { name: "Смотреть ритуал" }).click();
   await expect(page).toHaveURL(/\/lines\/bio-cell-extra-collagen$/);
   await expect(page.getByRole("heading", { name: "До и после" })).toBeVisible();
+});
+
+test("отзывы с Kaspi: скриншоты открываются на сайте", async ({ page }) => {
+  await page.goto("/lines/intense-purifying-acne");
+  await expect(page.getByRole("heading", { name: "Отзывы покупательниц" })).toBeVisible();
+  await expect(page.getByText("21 отзыв покупательниц на Kaspi.kz")).toBeVisible();
+  await page.getByRole("button", { name: "Смотреть скриншоты с Kaspi" }).click();
+  const dialog = page.getByRole("dialog", { name: "Скриншоты отзывов с Kaspi.kz" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("img")).toHaveCount(7);
+  await dialog.getByRole("button", { name: "Закрыть" }).click();
+  await expect(dialog).toBeHidden();
+  expect(page.url()).toContain("/lines/intense-purifying-acne");
 });

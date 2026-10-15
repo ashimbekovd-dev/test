@@ -12,6 +12,8 @@ import { getProducts } from "@/lib/products/source";
 import { buildRitualMessage, waLink } from "@/lib/whatsapp";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
+import { KaspiReviews } from "@/components/KaspiReviews";
+import { reviewsFor, shotsFor } from "@/lib/reviews";
 
 export const revalidate = 300;
 
@@ -100,6 +102,13 @@ export default async function LinePage({ params }: Props) {
         <section className="mt-16 md:mt-24" aria-labelledby="line-cases">
           <h2 id="line-cases" className="text-[40px] md:text-[52px]">До и после</h2>
           <div className="mt-6"><BeforeAfterGallery cases={casesFor({ line: line.slug })} columns={2} /></div>
+        </section>
+      )}
+
+      {reviewsFor(line.slug).length > 0 && (
+        <section className="mt-16 md:mt-24" aria-labelledby="line-reviews">
+          <h2 id="line-reviews" className="text-[40px] md:text-[52px]">Отзывы покупательниц</h2>
+          <div className="mt-6"><KaspiReviews reviews={reviewsFor(line.slug)} shots={shotsFor(line.slug)} /></div>
         </section>
       )}
 

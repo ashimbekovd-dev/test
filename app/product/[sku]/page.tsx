@@ -9,6 +9,8 @@ import { TrustStrip } from "@/components/TrustStrip";
 import { RichText } from "@/components/RichText";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
+import { KaspiReviews } from "@/components/KaspiReviews";
+import { reviewsFor, shotsFor } from "@/lib/reviews";
 import { Price } from "@/components/Price";
 import { ProductGallery } from "@/components/ProductGallery";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -50,6 +52,7 @@ export default async function ProductPage({ params }: Props) {
     ? ritual.filter((p) => p.sku !== product.sku)
     : products.filter((p) => p.category === product.category && p.sku !== product.sku).slice(0, 4);
   const cases = casesFor({ sku: product.sku, line: product.line });
+  const reviews = reviewsFor(product.line);
   const concerns = product.concerns.map(getConcern).filter((c) => c !== undefined);
   const name = displayName(product.name);
 
@@ -119,6 +122,13 @@ export default async function ProductPage({ params }: Props) {
         <section className="mt-20" aria-labelledby="product-cases">
           <h2 id="product-cases" className="text-[36px]">Результаты клиенток</h2>
           <div className="mt-6"><BeforeAfterGallery cases={cases} columns={2} /></div>
+        </section>
+      )}
+
+      {reviews.length > 0 && (
+        <section className="mt-20" aria-labelledby="product-reviews">
+          <h2 id="product-reviews" className="text-[36px]">Отзывы о ритуале {line?.name}</h2>
+          <div className="mt-6"><KaspiReviews reviews={reviews} shots={shotsFor(product.line)} /></div>
         </section>
       )}
 
