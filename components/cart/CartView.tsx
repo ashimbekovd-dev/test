@@ -10,6 +10,7 @@ import { CONTACTS } from "@/lib/config";
 import { useCart } from "./CartProvider";
 import { ProductImage } from "../ProductImage";
 import { WhatsAppIcon } from "../icons";
+import { RitualUpsell } from "./RitualUpsell";
 
 const field = "mt-1 w-full rounded-2xl border border-line bg-white/70 px-4 py-3 outline-none focus:border-ink/40";
 
@@ -46,7 +47,7 @@ export function CartView({ products }: { products: Product[] }) {
 
   return (
     <div className="mt-8 grid gap-12 lg:grid-cols-[1.3fr_1fr]">
-      <section aria-label="Товары в корзине">
+      <section aria-label="Товары в корзине" className="min-w-0">
         <ul className="divide-y divide-line border-y border-line">
           {lines.map((l) => {
             const p = l.product;
@@ -86,6 +87,7 @@ export function CartView({ products }: { products: Product[] }) {
           <button type="button" onClick={cart.clear} className="text-[14px] text-mute underline underline-offset-2 hover:text-ink">Очистить корзину</button>
           <p className="text-xl">Итого: <b className="tabular-nums">{formatPrice(total)}</b></p>
         </div>
+        <RitualUpsell products={products} />
       </section>
 
       <section aria-labelledby="order" className="h-fit rounded-[28px] bg-sage/50 p-6 md:p-8">

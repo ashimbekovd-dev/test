@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { parseProductsCsv } from "@/lib/products/parse";
-import { LINES, lineProducts, parseLine, stepOf } from "@/lib/lines";
+import { LINES, lineProducts, parseLine, ritualGaps, stepOf } from "@/lib/lines";
 import { CONCERNS } from "@/lib/concerns";
 
 const { products } = parseProductsCsv(readFileSync(path.join(process.cwd(), "data/products.csv"), "utf8"));
@@ -36,5 +36,19 @@ describe("concerns in data", () => {
     for (const c of CONCERNS) {
       expect(products.filter((p) => p.concerns.includes(c.slug)).length, c.slug).toBeGreaterThanOrEqual(3);
     }
+  });
+});
+
+describe("ritualGaps", () => {
+  it("подсказывает недостающие шаги только для начатых ритуалов", () => {
+    const gaps = ritualGaps(["ACTIVE-HYDRA-MOIST-SERUM", "HAND-CREAM"], products);
+    expect(gaps.map((g) => g.line.slug)).toEqual(["active-hydra-moist"]);
+    expect(gaps[0].have).toBe(1);
+    expect(gaps[0].missing.map((p) => p.sku)).not.toContain("ACTIVE-HYDRA-MOIST-SERUM");
+    expect(gaps[0].missing[0].sku).toBe("ACTIVE-HYDRA-MOIST-CLEANSING-FOAM");
+  });
+  it("полный ритуал в корзине → подсказки нет", () => {
+    const all = lineProducts(products, "relief-soothing").map((p) => p.sku);
+    expect(ritualGaps(all, products)).toEqual([]);
   });
 });

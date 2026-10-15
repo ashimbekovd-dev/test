@@ -10,6 +10,15 @@ import { WhatsAppFab } from "@/components/WhatsAppFab";
 export const metadata: Metadata = {
   title: { default: "PIYOL' — корейская косметика в Алматы", template: "%s — PIYOL'" },
   description: "Каталог корейской косметики PIYOL'. Заказ в WhatsApp, самовывоз из магазина в Алматы.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://test-one-beta-67.vercel.app"),
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    siteName: "PIYOL'",
+    title: "PIYOL' — уход, в который можно влюбиться",
+    description: "Корейская космецевтика PIYOL'. Подбор ухода, заказ в WhatsApp, самовывоз в Алматы и доставка по Казахстану.",
+    images: [{ url: "/hero-hydra-moist.jpg", width: 1600, height: 2400, alt: "Линия PIYOL' Active Hydra-Moist" }],
+  },
 };
 
 export const viewport: Viewport = { themeColor: "#fbf7f4" };

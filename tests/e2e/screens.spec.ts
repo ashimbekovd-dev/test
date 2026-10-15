@@ -66,3 +66,25 @@ test("задача кожи → каталог; линия → весь риту
   await page.getByRole("button", { name: /Весь ритуал в корзину/ }).click();
   await expect(page.getByRole("link", { name: /Корзина, товаров: 5/ })).toBeVisible();
 });
+
+test("тест подбора → программа → в корзину; корзина предлагает дополнить ритуал", async ({ page }) => {
+  await page.goto("/quiz");
+  for (const answer of ["42–55", "Морщины, потеря упругости", "Комфортная", "Нет, ухаживаю дома", "Не хочу, ищу мягкую альтернативу"]) {
+    await page.getByRole("button", { name: answer }).click();
+  }
+  await expect(page.getByRole("heading", { level: 2, name: "Упругость и морщины" })).toBeVisible();
+  await expect(page.getByText(/Основа: ритуал Bio Cell Extra Collagen/)).toBeVisible();
+  await page.getByRole("button", { name: /Начать с главного/ }).click();
+  await page.getByRole("link", { name: "Оформить заказ" }).click();
+  await expect(page).toHaveURL(/\/cart$/);
+  await expect(page.getByRole("heading", { name: /Дополните ритуал Bio Cell Extra Collagen/ })).toBeVisible();
+});
+
+test("панель покупки появляется на телефоне после прокрутки", async ({ page }, info) => {
+  test.skip(info.project.name !== "mobile", "только для телефона");
+  await page.goto("/product/ACTIVE-HYDRA-MOIST-SERUM");
+  const bar = page.locator(".buy-bar");
+  await expect(bar).toHaveAttribute("aria-hidden", "true");
+  await page.evaluate(() => scrollTo(0, 1600));
+  await expect(bar).toHaveAttribute("aria-hidden", "false");
+});

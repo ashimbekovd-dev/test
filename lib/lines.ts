@@ -105,3 +105,15 @@ export function lineProducts(products: Product[], slug: string): Product[] {
     .sort((a, b) => a.s - b.s || a.i - b.i)
     .map(({ p }) => p);
 }
+
+export type RitualGap = { line: Line; have: number; missing: Product[] };
+
+/** Линии, из которых в корзине есть хотя бы одно средство, и шаги, которых не хватает до полного ритуала. */
+export function ritualGaps(cartSkus: string[], products: Product[]): RitualGap[] {
+  const inCart = new Set(cartSkus);
+  return LINES.map((line) => {
+    const steps = lineProducts(products, line.slug).filter((p) => p.inStock);
+    const have = steps.filter((p) => inCart.has(p.sku)).length;
+    return { line, have, missing: steps.filter((p) => !inCart.has(p.sku)) };
+  }).filter((g) => g.have > 0 && g.missing.length > 0);
+}

@@ -6,6 +6,7 @@ import { ProductImage } from "@/components/ProductImage";
 import { HeroVisual } from "@/components/HeroVisual";
 import { ConcernPicker } from "@/components/ConcernPicker";
 import { LineCards } from "@/components/LineCards";
+import { TrustStrip } from "@/components/TrustStrip";
 
 export const revalidate = 300;
 
@@ -26,16 +27,27 @@ export default async function Home() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/catalog" className="btn bg-ink text-white hover:bg-ink/85">Смотреть каталог</Link>
-            <Link href="/contacts" className="btn border border-ink/30 hover:border-ink">Магазин в Алматы</Link>
+            <Link href="/quiz" className="btn border border-ink/30 hover:border-ink">Подобрать уход за минуту</Link>
           </div>
         </div>
         <HeroVisual lineHref="/lines/active-hydra-moist" />
       </section>
 
-      <section className="wrap mt-20 md:mt-28" aria-labelledby="concerns">
+      <section className="wrap mt-14 border-y border-line py-8" aria-label="Почему PIYOL'">
+        <TrustStrip />
+      </section>
+
+      <section className="wrap mt-16 md:mt-24" aria-labelledby="concerns">
         <h2 id="concerns" className="text-[40px] md:text-[52px]">Что хотите решить?</h2>
         <p className="mt-2 max-w-xl text-[16px] text-mute">Начните с задачи кожи — покажем средства, которые с ней работают.</p>
         <div className="mt-8"><ConcernPicker products={products} /></div>
+        <Link href="/quiz" className="group mt-3 flex flex-col gap-3 rounded-[28px] bg-ink px-6 py-6 text-milk sm:flex-row sm:items-center sm:justify-between md:px-8">
+          <span>
+            <span className="block font-display text-[28px] leading-tight md:text-[34px]">Не знаете, с чего начать?</span>
+            <span className="mt-1 block text-[15px] text-milk/75">Пять вопросов о коже — и готовая программа с ценой.</span>
+          </span>
+          <span className="btn shrink-0 bg-milk text-ink group-hover:bg-white">Пройти тест</span>
+        </Link>
       </section>
 
       <section className="wrap mt-20" aria-labelledby="cats">

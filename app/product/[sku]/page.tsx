@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { getProduct, getProducts } from "@/lib/products/source";
 import { buildSingleProductMessage, waLink } from "@/lib/whatsapp";
 import { AddToCartButton } from "@/components/AddToCartButton";
+import { StickyBuyBar } from "@/components/StickyBuyBar";
+import { TrustStrip } from "@/components/TrustStrip";
 import { Price } from "@/components/Price";
 import { ProductGallery } from "@/components/ProductGallery";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -22,7 +24,13 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = await getProduct(decodeURIComponent((await params).sku));
-  return p ? { title: displayName(p.name), description: p.description?.split("\n")[0] } : {};
+  if (!p) return {};
+  const description = p.nameRu ?? p.description?.split("\n")[0];
+  return {
+    title: displayName(p.name),
+    description,
+    openGraph: { title: `${displayName(p.name)} — PIYOL'`, description, images: [{ url: p.images[0] }] },
+  };
 }
 
 const paragraphs = (t?: string) => (t ?? "").split(/\n\s*\n/).map((s) => s.trim()).filter(Boolean);
@@ -67,7 +75,7 @@ export default async function ProductPage({ params }: Props) {
           )}
           <div className="mt-6"><Price price={product.price} oldPrice={product.oldPrice} size="lg" /></div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div id="buy-actions" className="mt-6 flex flex-col gap-3 sm:flex-row">
             <AddToCartButton sku={product.sku} />
             <a href={waLink(buildSingleProductMessage(product))} target="_blank" rel="noreferrer" className="btn border border-moss text-moss hover:bg-moss hover:text-white">
               <WhatsAppIcon className="size-5" /> Заказать в WhatsApp
@@ -96,6 +104,7 @@ export default async function ProductPage({ params }: Props) {
               {paragraphs(product.howToUse).map((t, i) => <p key={i} className="mt-3">{t}</p>)}
             </section>
           )}
+          <div className="mt-8"><TrustStrip compact /></div>
           <p className="mt-8 rounded-2xl bg-sage/60 p-4 text-[14px]">
             Самовывоз из магазина в Алматы. Доставка по Алматы и Казахстану. <Link href="/delivery" className="underline underline-offset-2">Подробнее</Link>
           </p>
@@ -108,6 +117,7 @@ export default async function ProductPage({ params }: Props) {
           <div className="mt-6"><ProductGrid products={similar} /></div>
         </section>
       )}
+      <StickyBuyBar sku={product.sku} name={name} price={product.price} waHref={waLink(buildSingleProductMessage(product))} />
     </div>
   );
 }
