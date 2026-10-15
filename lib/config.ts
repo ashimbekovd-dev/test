@@ -4,7 +4,7 @@ export const CONTACTS = {
   storeName: "PIYOL'",
   pickupAddress: "ул. Жандосова, 310г (мкр Таугуль-3)",
   city: "Алматы",
-  hours: "ежедневно 10:00–22:00",
+  hours: "ежедневно с 9:00 до 21:00",
   phones: ["+7 708 050 35 18", "+7 708 050 25 18"],
   paymentPhone: "+7 771 980 00 77",
   returnsWhatsapp: "+7 747 806 39 11",
