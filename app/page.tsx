@@ -23,7 +23,7 @@ export default async function Home() {
     <>
       <section className="container-page grid items-center gap-10 pb-16 pt-10 md:grid-cols-[1.15fr_1fr] md:gap-16 md:pb-24 md:pt-16">
         <div className="hero-rise">
-          <h1 className="text-[3.3rem] leading-[0.98] sm:text-[4.6rem] lg:text-[6.2rem]">{SLOGAN}</h1>
+          <h1 className="text-[3.3rem] leading-[0.98] sm:text-[4.6rem] lg:text-[5.6rem]">{SLOGAN}</h1>
           <p className="mt-6 max-w-[34ch] text-[17px] text-graphite-soft md:text-lg">
             Корейская космецевтика PIYOL&rsquo; и проверенные бренды для домашнего ухода. Подберём средства под вашу кожу
             в ТРЦ Forum или в WhatsApp.
@@ -44,7 +44,7 @@ export default async function Home() {
         {heroProduct && (
           <Link
             href={`/product/${heroProduct.sku}`}
-            className="group relative mx-auto block w-full max-w-[420px] md:max-w-none"
+            className="group relative mx-auto block w-full max-w-[420px] md:mr-0 md:max-w-[440px]"
             aria-label={`${heroProduct.name} — открыть товар`}
           >
             <div className="arch bg-powder p-3 sm:p-4">
