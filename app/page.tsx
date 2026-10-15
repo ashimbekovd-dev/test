@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCategories, getProducts } from "@/lib/products/source";
-import { CONTACTS } from "@/lib/config";
+import { CONTACTS, DELIVERY_FROM } from "@/lib/config";
+import { formatPrice } from "@/lib/format";
 import { ProductGrid } from "@/components/ProductGrid";
 import { HeroVisual } from "@/components/HeroVisual";
 import { ConcernPicker } from "@/components/ConcernPicker";
@@ -99,7 +100,7 @@ export default async function Home() {
           <div className="md:border-l md:border-ink/10 md:pl-10">
             <h3 className="text-3xl">Магазин в Алматы</h3>
             <p className="mt-3">{CONTACTS.pickupAddress}<br />{CONTACTS.hours}</p>
-            <p className="mt-3 text-mute">Самовывоз бесплатно. Доставка по Алматы от 1500 ₸, по Казахстану от 1800 ₸.</p>
+            <p className="mt-3 text-mute">Самовывоз бесплатно. Доставка по Алматы от {formatPrice(DELIVERY_FROM.almaty)}, по Казахстану от {formatPrice(DELIVERY_FROM.kazakhstan)}.</p>
             <a href={CONTACTS.mapUrl} target="_blank" rel="noreferrer" className="btn mt-6 border border-ink/30 hover:border-ink">Открыть на карте</a>
           </div>
         </div>

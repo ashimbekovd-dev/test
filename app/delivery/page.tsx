@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { CONTACTS } from "@/lib/config";
+import { CONTACTS, DELIVERY_FROM } from "@/lib/config";
+import { formatPrice } from "@/lib/format";
 import { InfoPage } from "@/components/InfoPage";
 
 export const metadata: Metadata = { title: "Доставка и оплата" };
@@ -11,8 +12,8 @@ export default function Delivery() {
         <h2>Получение заказа</h2>
         <ul>
           <li>Самовывоз из магазина в Алматы ({CONTACTS.pickupAddress}): бесплатно</li>
-          <li>Доставка по Алматы: от 1500 ₸</li>
-          <li>Доставка по Казахстану: от 1800 ₸</li>
+          <li>Доставка по Алматы: от {formatPrice(DELIVERY_FROM.almaty)}</li>
+          <li>Доставка по Казахстану: от {formatPrice(DELIVERY_FROM.kazakhstan)}</li>
         </ul>
         <p>После отправки заказа в WhatsApp менеджер подтвердит наличие, стоимость и срок доставки.</p>
       </section>

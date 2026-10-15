@@ -15,3 +15,6 @@ export const CONTACTS = {
   facebook: "https://www.facebook.com/piyol.space",
   mapUrl: "https://go.2gis.com/02AH9",
 } as const;
+
+/** Стоимость доставки «от», ₸. Меняется здесь — обновится в корзине, на главной и на странице доставки. */
+export const DELIVERY_FROM = { almaty: 2700, kazakhstan: 2700 } as const;

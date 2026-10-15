@@ -6,7 +6,7 @@ import { MAX_QTY, resolveCart } from "@/lib/cart/cart";
 import { displayName, formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/products/types";
 import { buildOrderMessage, validateOrderForm, waLink, type OrderForm } from "@/lib/whatsapp";
-import { CONTACTS } from "@/lib/config";
+import { CONTACTS, DELIVERY_FROM } from "@/lib/config";
 import { useCart } from "./CartProvider";
 import { ProductImage } from "../ProductImage";
 import { WhatsAppIcon } from "../icons";
@@ -102,7 +102,7 @@ export function CartView({ products }: { products: Product[] }) {
           <fieldset>
             <legend className="text-[14px]">Как получить</legend>
             <div className="mt-2 grid gap-2">
-              {([["pickup", `Самовывоз, ${CONTACTS.pickupAddress} — бесплатно`], ["delivery", "Доставка: по Алматы от 1500 ₸, по Казахстану от 1800 ₸"]] as const).map(([v, text]) => (
+              {([["pickup", `Самовывоз, ${CONTACTS.pickupAddress} — бесплатно`], ["delivery", `Доставка: по Алматы от ${formatPrice(DELIVERY_FROM.almaty)}, по Казахстану от ${formatPrice(DELIVERY_FROM.kazakhstan)}`]] as const).map(([v, text]) => (
                 <label key={v} className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-4 py-3 text-[14px] ${form.delivery === v ? "border-ink bg-white/80" : "border-line bg-white/40"}`}>
                   <input type="radio" name="delivery" value={v} checked={form.delivery === v} onChange={() => set({ delivery: v })} className="mt-1 accent-moss" />
                   {text}
