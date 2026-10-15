@@ -3,6 +3,7 @@ import { getCategories, getProducts } from "@/lib/products/source";
 import { CONTACTS } from "@/lib/config";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
+import { HeroVisual } from "@/components/HeroVisual";
 
 export const revalidate = 300;
 
@@ -12,7 +13,6 @@ export default async function Home() {
   const hits = products.filter((p) => p.hit).slice(0, 4);
   const sale = products.filter((p) => p.oldPrice).slice(0, 4);
   const cover = (c: string) => products.find((p) => p.category === c)?.images[0];
-  const heroImage = (hits[0] ?? products[0])?.images[0];
 
   return (
     <>
@@ -27,11 +27,7 @@ export default async function Home() {
             <Link href="/contacts" className="btn border border-ink/30 hover:border-ink">Магазин в Алматы</Link>
           </div>
         </div>
-        {heroImage && (
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[460px] arch bg-petal">
-            <ProductImage src={heroImage} alt="" sizes="(min-width: 768px) 40vw, 100vw" priority />
-          </div>
-        )}
+        <HeroVisual lineHref={`/catalog?q=${encodeURIComponent("Hydra-Moist")}`} />
       </section>
 
       <section className="wrap mt-20" aria-labelledby="cats">
