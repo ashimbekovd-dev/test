@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { allReviews, averageRating, REVIEW_SHOTS, REVIEWS, reviewsFor, reviewsWord, shotsFor } from "@/lib/reviews";
+import { allReviews, averageRating, reviewsForProduct, REVIEW_SHOTS, REVIEWS, reviewsFor, reviewsWord, shotsFor } from "@/lib/reviews";
 import { getLine } from "@/lib/lines";
 
 describe("Kaspi reviews", () => {
@@ -29,10 +29,22 @@ describe("Kaspi reviews", () => {
     expect(shotsFor("active-hydra-moist")).toHaveLength(5);
     expect(reviewsFor("active-hydra-moist")[0].name).toBe("Марзия");
   });
+  it("отзывы на одно средство: на его карточке — только они, на линии — вместе с остальными", () => {
+    const cream = reviewsForProduct("BIO-CELL-EXTRA-COLLAGEN-BOOSTER-CREAM", "bio-cell-extra-collagen");
+    expect(cream.own).toBe(true);
+    expect(cream.reviews).toHaveLength(21);
+    expect(cream.shots).toHaveLength(9);
+    expect(cream.reviews.every((r) => r.sku === "BIO-CELL-EXTRA-COLLAGEN-BOOSTER-CREAM")).toBe(true);
+    expect(reviewsFor("bio-cell-extra-collagen")).toHaveLength(21);
+    const serum = reviewsForProduct("INTENSE-PURIFYING-ACNE-SERUM", "intense-purifying-acne");
+    expect(serum.own).toBe(false);
+    expect(serum.reviews).toHaveLength(21);
+    expect(reviewsForProduct("HAND-CREAM").reviews).toEqual([]);
+  });
   it("главная: линии чередуются, ничего не теряется", () => {
     const all = allReviews();
     expect(all).toHaveLength(REVIEWS.length);
-    expect(all.slice(0, 2).map((r) => r.line).sort()).toEqual(["active-hydra-moist", "intense-purifying-acne"]);
+    expect(new Set(all.slice(0, 3).map((r) => r.line)).size).toBe(3);
   });
   it("средняя оценка и склонение", () => {
     expect(averageRating(reviewsFor("intense-purifying-acne"))).toBe(5);

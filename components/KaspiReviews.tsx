@@ -17,7 +17,21 @@ function Stars({ value, className = "" }: { value: number; className?: string })
 }
 
 /** Отзывы с Kaspi: карточки с текстом + оригинальные скриншоты, которые открываются прямо на сайте. */
-export function KaspiReviews({ reviews, shots, limit = 6, showLine = false }: { reviews: Review[]; shots: ReviewShot[]; limit?: number; showLine?: boolean }) {
+export function KaspiReviews({
+  reviews,
+  shots,
+  limit = 6,
+  showLine = false,
+  currentSku,
+}: {
+  reviews: Review[];
+  shots: ReviewShot[];
+  limit?: number;
+  /** Плашка «Ритуал …» на отзывах о наборах (для главной) */
+  showLine?: boolean;
+  /** На странице этого товара плашку со средством не показываем */
+  currentSku?: string;
+}) {
   const [all, setAll] = useState(false);
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -58,11 +72,15 @@ export function KaspiReviews({ reviews, shots, limit = 6, showLine = false }: { 
             className={`flex w-[82%] shrink-0 snap-start flex-col rounded-[24px] border border-line bg-white/60 p-5 sm:w-[46%] md:w-auto ${!all && i >= limit ? "md:hidden" : ""}`}
           >
             <Stars value={r.rating} className="text-[16px]" />
-            {showLine && getLine(r.line) && (
+            {r.sku && r.product && r.sku !== currentSku ? (
+              <Link href={`/product/${encodeURIComponent(r.sku)}`} className="mt-2 self-start rounded-full bg-petal px-3 py-0.5 text-[12px] hover:bg-petal-deep/40">
+                {r.product}
+              </Link>
+            ) : !r.sku && showLine && getLine(r.line) ? (
               <Link href={`/lines/${r.line}`} className="mt-2 self-start rounded-full bg-sage/70 px-3 py-0.5 text-[12px] hover:bg-sage">
                 Ритуал {getLine(r.line)!.name}
               </Link>
-            )}
+            ) : null}
             <p className="mt-3 flex-1 text-[15px] leading-relaxed">«{r.text}»</p>
             <p className="mt-4 flex items-baseline justify-between gap-3 text-[13px]">
               <span className="font-medium">{r.name}</span>

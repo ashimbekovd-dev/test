@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const PAGES = ["/", "/catalog", "/product/ACTIVE-HYDRA-MOIST-SERUM", "/product/INTENSE-PURIFYING-ACNE-SERUM", "/lines/intense-purifying-acne", "/lines/active-hydra-moist", "/cart", "/about", "/delivery", "/contacts"];
+const PAGES = ["/", "/catalog", "/product/ACTIVE-HYDRA-MOIST-SERUM", "/product/INTENSE-PURIFYING-ACNE-SERUM", "/lines/intense-purifying-acne", "/lines/active-hydra-moist", "/product/BIO-CELL-EXTRA-COLLAGEN-BOOSTER-CREAM", "/cart", "/about", "/delivery", "/contacts"];
 
 for (const path of PAGES) {
   test(`no horizontal scroll on ${path}`, async ({ page }, info) => {

@@ -11,14 +11,20 @@ export type Review = {
   rating: 1 | 2 | 3 | 4 | 5;
   text: string;
   line: string;
+  /** Если отзыв про одно средство, а не про весь набор */
+  sku?: string;
+  /** Короткое название средства для плашки */
+  product?: string;
   /** Показывать первыми: отзывы о действии средств */
   featured?: boolean;
 };
 
-export type ReviewShot = { image: string; width: number; height: number; line: string };
+export type ReviewShot = { image: string; width: number; height: number; line: string; sku?: string };
 
 const ACNE = "intense-purifying-acne";
 const HYDRA = "active-hydra-moist";
+const COLLAGEN = "bio-cell-extra-collagen";
+const CREAM = { line: COLLAGEN, sku: "BIO-CELL-EXTRA-COLLAGEN-BOOSTER-CREAM", product: "Extra Collagen Booster Cream" } as const;
 
 export const REVIEWS: Review[] = [
   { name: "Аида", date: "14.10.2026", rating: 5, line: ACNE, featured: true, text: "Очень хорошо помогает от акне." },
@@ -54,6 +60,29 @@ export const REVIEWS: Review[] = [
   { name: "Феруза", date: "12.10.2025", rating: 5, line: HYDRA, featured: true, text: "Отличный набор! Средства приятно ложатся, кожа после них дышит и выглядит посвежевшей. Очень довольна покупкой. Беру его уже не в первый раз, стабильно отличный результат! Пробовала и другие линейки от PIYOL, все на высоте. Отдельная благодарность продавцу за качественный товар и Каспи за быструю доставку!" },
   { name: "Мадина", date: "02.12.2024", rating: 5, line: HYDRA, text: "У мамы Купероз очень мягко действует накопительный эффект. Отличная уходовая линия." },
   { name: "Камшат", date: "23.08.2024", rating: 5, line: HYDRA, text: "Маған ұнады." },
+
+  // ───────── Bio Cell Extra Collagen Booster Cream ─────────
+  { name: "Светлана", date: "17.10.2026", rating: 5, ...CREAM, featured: true, text: "Крем очень хороший, липкости нет, кожа прям бархатная целый день. Первый раз взяла, думаю не последний." },
+  { name: "Татьяна", date: "12.10.2026", rating: 5, ...CREAM, featured: true, text: "Классный крем. Хорошо впитывается, не жирнит кожу. Рекомендую к покупке!" },
+  { name: "Гульден", date: "11.10.2026", rating: 5, ...CREAM, text: "Хорошо увлажняет лицо. Намазала только один раз." },
+  { name: "Татьяна", date: "09.10.2026", rating: 5, ...CREAM, text: "Хороший крем, качественный, мне понравился. Выписала 2 шт, всем рекомендую." },
+  { name: "Аида", date: "02.09.2026", rating: 5, ...CREAM, text: "Второй раз приобрела крем, очень понравился." },
+  { name: "Марзия", date: "31.08.2026", rating: 5, ...CREAM, featured: true, text: "Крем реально увлажняет кожу. После нанесения кода мягкая, нежная, увлажненная и сияющая." },
+  { name: "Асия", date: "31.08.2026", rating: 5, ...CREAM, featured: true, text: "Отличный крем, не жирный, но очень хорошо питает кожу и удобно, что крем можно выдавить порционно." },
+  { name: "Лейла", date: "23.08.2026", rating: 5, ...CREAM, text: "Очень классный крем с приятной текстурой и удобным использованием." },
+  { name: "Светлана", date: "22.08.2026", rating: 5, ...CREAM, text: "Уже второй день пользуюсь, я восторге." },
+  { name: "Жаннат", date: "02.06.2026", rating: 5, ...CREAM, text: "Этот крем беру второй раз, рекомендую." },
+  { name: "Әлия", date: "05.05.2026", rating: 5, ...CREAM, text: "Покупаю уже вторую баночку, супер." },
+  { name: "Александра", date: "12.04.2026", rating: 5, ...CREAM, text: "Любимый эффективный крем для лица." },
+  { name: "Зарема", date: "25.01.2026", rating: 5, ...CREAM, featured: true, text: "Классный крем, очень хорошо увлажняет, на мою сухую кожу прям самое то Спасибо магазину RIYOL. У вас классная продукция." },
+  { name: "Асель", date: "02.12.2025", rating: 5, ...CREAM, featured: true, text: "Крем просто супер! С первого применения кожа освежала! Не липнет! Прям чувствую свежую кожу! Спасибо магазину! И подарок положили, прям приятно!" },
+  { name: "Лариса", date: "25.08.2025", rating: 5, ...CREAM, text: "Отличный крем, рекомендую." },
+  { name: "Надежда", date: "31.07.2025", rating: 5, ...CREAM, text: "Очень хороший крем." },
+  { name: "Ирина", date: "22.07.2025", rating: 5, ...CREAM, text: "Отличный крем, заказываю не первый раз." },
+  { name: "Азиза", date: "08.03.2025", rating: 5, ...CREAM, text: "Кремнин сапасы оте керемет. Уакытынан ерте келди. Сыйлықтарыңызға көп рақмет. Алуға кеңес беремін." },
+  { name: "Дильфуза", date: "22.01.2025", rating: 5, ...CREAM, text: "Крем отличный, пользуюсь второй день, увлажняет хорошо. Спасибо за крем." },
+  { name: "Шолпан", date: "09.12.2024", rating: 5, ...CREAM, text: "Крем ночной, не пожелала эффект 4 день." },
+  { name: "Гульжан", date: "26.07.2024", rating: 5, ...CREAM, featured: true, text: "Крем заменил мне брв в прямом смысле, покупаю в 5 раз, очень нравится." },
 ];
 
 export const REVIEW_SHOTS: ReviewShot[] = [
@@ -69,6 +98,15 @@ export const REVIEW_SHOTS: ReviewShot[] = [
   { image: "/reviews/kaspi-hydra-3.png", width: 1864, height: 632, line: HYDRA },
   { image: "/reviews/kaspi-hydra-4.png", width: 1868, height: 414, line: HYDRA },
   { image: "/reviews/kaspi-hydra-5.png", width: 1874, height: 942, line: HYDRA },
+  { image: "/reviews/kaspi-collagen-cream-1.png", width: 1860, height: 230, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-2.png", width: 1802, height: 398, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-3.png", width: 1856, height: 196, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-4.png", width: 1870, height: 652, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-5.png", width: 1722, height: 404, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-6.png", width: 1864, height: 834, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-7.png", width: 1752, height: 256, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-8.png", width: 1860, height: 1234, line: COLLAGEN, sku: CREAM.sku },
+  { image: "/reviews/kaspi-collagen-cream-9.png", width: 1794, height: 220, line: COLLAGEN, sku: CREAM.sku },
 ];
 
 const dateKey = (d: string) => d.split(".").reverse().join("");
@@ -84,9 +122,20 @@ export function reviewsFor(line?: string): Review[] {
 
 export const shotsFor = (line?: string) => (line ? REVIEW_SHOTS.filter((s) => s.line === line) : []);
 
-/** Для главной: все линии вперемешку — по одному избранному отзыву от каждой линии по очереди, дальше остальные. */
+/**
+ * Для карточки товара: если есть отзывы именно на это средство — только они,
+ * иначе отзывы на всю его линию.
+ */
+export function reviewsForProduct(sku: string, line?: string): { reviews: Review[]; shots: ReviewShot[]; own: boolean } {
+  const own = REVIEWS.filter((r) => r.sku === sku).sort(byPriority);
+  if (own.length) return { reviews: own, shots: REVIEW_SHOTS.filter((s) => s.sku === sku), own: true };
+  return { reviews: reviewsFor(line), shots: shotsFor(line), own: false };
+}
+
+/** Для главной: по очереди по одному отзыву от каждого набора/средства, сначала избранные. */
 export function allReviews(): Review[] {
-  const lines = [...new Set(REVIEWS.map((r) => r.line))].map((l) => reviewsFor(l));
+  const groups = [...new Set(REVIEWS.map((r) => r.sku ?? r.line))];
+  const lines = groups.map((g) => REVIEWS.filter((r) => (r.sku ?? r.line) === g).sort(byPriority));
   const out: Review[] = [];
   for (let i = 0; lines.some((l) => i < l.length); i++) for (const l of lines) if (l[i]) out.push(l[i]);
   return out;
