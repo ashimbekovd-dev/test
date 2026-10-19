@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { CloseIcon } from "./icons";
+import Link from "next/link";
+import { getLine } from "@/lib/lines";
 import { averageRating, reviewsWord, type Review, type ReviewShot } from "@/lib/reviews";
 
 function Stars({ value, className = "" }: { value: number; className?: string }) {
@@ -15,7 +17,7 @@ function Stars({ value, className = "" }: { value: number; className?: string })
 }
 
 /** Отзывы с Kaspi: карточки с текстом + оригинальные скриншоты, которые открываются прямо на сайте. */
-export function KaspiReviews({ reviews, shots, limit = 6 }: { reviews: Review[]; shots: ReviewShot[]; limit?: number }) {
+export function KaspiReviews({ reviews, shots, limit = 6, showLine = false }: { reviews: Review[]; shots: ReviewShot[]; limit?: number; showLine?: boolean }) {
   const [all, setAll] = useState(false);
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -56,6 +58,11 @@ export function KaspiReviews({ reviews, shots, limit = 6 }: { reviews: Review[];
             className={`flex w-[82%] shrink-0 snap-start flex-col rounded-[24px] border border-line bg-white/60 p-5 sm:w-[46%] md:w-auto ${!all && i >= limit ? "md:hidden" : ""}`}
           >
             <Stars value={r.rating} className="text-[16px]" />
+            {showLine && getLine(r.line) && (
+              <Link href={`/lines/${r.line}`} className="mt-2 self-start rounded-full bg-sage/70 px-3 py-0.5 text-[12px] hover:bg-sage">
+                Ритуал {getLine(r.line)!.name}
+              </Link>
+            )}
             <p className="mt-3 flex-1 text-[15px] leading-relaxed">«{r.text}»</p>
             <p className="mt-4 flex items-baseline justify-between gap-3 text-[13px]">
               <span className="font-medium">{r.name}</span>

@@ -11,7 +11,7 @@ import { CategoryBento } from "@/components/CategoryBento";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { CASES } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
-import { reviewsFor, shotsFor } from "@/lib/reviews";
+import { allReviews, REVIEW_SHOTS } from "@/lib/reviews";
 
 export const revalidate = 300;
 
@@ -63,11 +63,8 @@ export default async function Home() {
       </section>
 
       <section className="wrap mt-20 md:mt-28" aria-labelledby="reviews">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 id="reviews" className="text-[40px] md:text-[52px]">Отзывы с Kaspi</h2>
-          <Link href="/lines/intense-purifying-acne" className="text-[15px] underline underline-offset-4 hover:text-moss">Ритуал Intense Purifying Acne</Link>
-        </div>
-        <div className="mt-8"><KaspiReviews reviews={reviewsFor("intense-purifying-acne")} shots={shotsFor("intense-purifying-acne")} limit={3} /></div>
+        <h2 id="reviews" className="text-[40px] md:text-[52px]">Отзывы с Kaspi</h2>
+        <div className="mt-8"><KaspiReviews reviews={allReviews()} shots={REVIEW_SHOTS} limit={3} showLine /></div>
       </section>
 
       <section className="wrap mt-20 md:mt-28" aria-labelledby="cats">

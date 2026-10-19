@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { averageRating, REVIEW_SHOTS, REVIEWS, reviewsFor, reviewsWord, shotsFor } from "@/lib/reviews";
+import { allReviews, averageRating, REVIEW_SHOTS, REVIEWS, reviewsFor, reviewsWord, shotsFor } from "@/lib/reviews";
 import { getLine } from "@/lib/lines";
 
 describe("Kaspi reviews", () => {
@@ -25,6 +25,14 @@ describe("Kaspi reviews", () => {
     expect(reviewsFor("relief-soothing")).toEqual([]);
     expect(reviewsFor(undefined)).toEqual([]);
     expect(shotsFor("intense-purifying-acne")).toHaveLength(7);
+    expect(reviewsFor("active-hydra-moist")).toHaveLength(10);
+    expect(shotsFor("active-hydra-moist")).toHaveLength(5);
+    expect(reviewsFor("active-hydra-moist")[0].name).toBe("Марзия");
+  });
+  it("главная: линии чередуются, ничего не теряется", () => {
+    const all = allReviews();
+    expect(all).toHaveLength(REVIEWS.length);
+    expect(all.slice(0, 2).map((r) => r.line).sort()).toEqual(["active-hydra-moist", "intense-purifying-acne"]);
   });
   it("средняя оценка и склонение", () => {
     expect(averageRating(reviewsFor("intense-purifying-acne"))).toBe(5);

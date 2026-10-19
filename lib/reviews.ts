@@ -18,6 +18,7 @@ export type Review = {
 export type ReviewShot = { image: string; width: number; height: number; line: string };
 
 const ACNE = "intense-purifying-acne";
+const HYDRA = "active-hydra-moist";
 
 export const REVIEWS: Review[] = [
   { name: "Аида", date: "14.10.2026", rating: 5, line: ACNE, featured: true, text: "Очень хорошо помогает от акне." },
@@ -41,6 +42,18 @@ export const REVIEWS: Review[] = [
   { name: "Жадыра", date: "21.09.2026", rating: 5, line: ACNE, featured: true, text: "Купила для сына. Прыщиков стало меньше. Масло чайного дерева, алое вера в составе везде, что очень круто." },
   { name: "Асемгуль", date: "20.09.2026", rating: 5, line: ACNE, featured: true, text: "Очень понравился набор, брала доче, подросток, есть небольшие высыпания. Состав, консистенция очень понравилось, самое не забивает поры, не жирнит, остановились на этом наборе." },
   { name: "Айгерим", date: "19.09.2026", rating: 5, line: ACNE, text: "Доставка раньше указанного срока пришла, всё хорошо упаковано, дочке понравилось с первого применения, будем ждать хороших результатов." },
+
+  // ───────── Active Hydra-Moist ─────────
+  { name: "Бақытгүл", date: "07.10.2026", rating: 5, line: HYDRA, text: "Уақытылы жеткізді. Қолданып жүргеніме 4-5 күн болды. Умывашкасы күшті, бетті раздражать етпейді, жуынған соң бетің жұмсақ болып тұрады. Кремдері жақсы сияқты. 4-5 рет қолданып, результатын айту ерте сияқты. Ең жақсысы, тюбиктерінде қолдану реті жазылған." },
+  { name: "Марзия", date: "27.08.2026", rating: 5, line: HYDRA, featured: true, text: "Купила для мужа, а потом дополнительно заказала для себя еще набор. Очень понравилось. Увлажнение кожи нужно в любом возрасте. Спасибо магазину за быструю доставку." },
+  { name: "Феруза", date: "19.08.2026", rating: 5, line: HYDRA, featured: true, text: "PIYOL — мой фаворит, заказываю регулярно. Пользовалась почти всей линейкой для ухода, который нужен моей коже сейчас, и каждая баночка оправдывает ожидания. Кожа заметно преобразилась: стала более гладкой, сияющей, тонус повысился. Составы грамотные, без агрессии, подходят даже моей капризной чувствительной коже. Упаковка эстетичная, подарки к наборам — приятный бонус. Очень довольна, буду брать ещё!" },
+  { name: "Нургуль", date: "24.06.2026", rating: 5, line: HYDRA, featured: true, text: "Очень понравился набор Active Hydra-Moist! Средства отлично увлажняют кожу, устраняют ощущение сухости и стянутости. Уже после нескольких применений кожа стала более мягкой, гладкой и свежей на вид. Текстура легкая, быстро впитывается и не оставляет липкости. Идеально подходит для ежедневного ухода. Покупкой очень довольна!" },
+  { name: "Дамира", date: "07.02.2026", rating: 5, line: HYDRA, text: "Купила маме! Надеюсь понравится до этого брала себе для чувствительной кожи, очень понравилось." },
+  { name: "Эльмира", date: "14.01.2026", rating: 5, line: HYDRA, text: "Отличный набор! Эстетичный вид. Отличная упаковка!" },
+  { name: "Анна", date: "18.10.2025", rating: 5, line: HYDRA, featured: true, text: "Отличная косметика, оригинал, беру не первый раз. Спасибо большое за подарочки и приятные слова. Очень нравится эффект от использования." },
+  { name: "Феруза", date: "12.10.2025", rating: 5, line: HYDRA, featured: true, text: "Отличный набор! Средства приятно ложатся, кожа после них дышит и выглядит посвежевшей. Очень довольна покупкой. Беру его уже не в первый раз, стабильно отличный результат! Пробовала и другие линейки от PIYOL, все на высоте. Отдельная благодарность продавцу за качественный товар и Каспи за быструю доставку!" },
+  { name: "Мадина", date: "02.12.2024", rating: 5, line: HYDRA, text: "У мамы Купероз очень мягко действует накопительный эффект. Отличная уходовая линия." },
+  { name: "Камшат", date: "23.08.2024", rating: 5, line: HYDRA, text: "Маған ұнады." },
 ];
 
 export const REVIEW_SHOTS: ReviewShot[] = [
@@ -51,19 +64,33 @@ export const REVIEW_SHOTS: ReviewShot[] = [
   { image: "/reviews/kaspi-acne-5.png", width: 1898, height: 1348, line: ACNE },
   { image: "/reviews/kaspi-acne-6.png", width: 1870, height: 654, line: ACNE },
   { image: "/reviews/kaspi-acne-7.png", width: 1864, height: 906, line: ACNE },
+  { image: "/reviews/kaspi-hydra-1.png", width: 1836, height: 264, line: HYDRA },
+  { image: "/reviews/kaspi-hydra-2.png", width: 1844, height: 232, line: HYDRA },
+  { image: "/reviews/kaspi-hydra-3.png", width: 1864, height: 632, line: HYDRA },
+  { image: "/reviews/kaspi-hydra-4.png", width: 1868, height: 414, line: HYDRA },
+  { image: "/reviews/kaspi-hydra-5.png", width: 1874, height: 942, line: HYDRA },
 ];
 
 const dateKey = (d: string) => d.split(".").reverse().join("");
 
+const byPriority = (a: Review, b: Review) =>
+  Number(!!b.featured) - Number(!!a.featured) || dateKey(b.date).localeCompare(dateKey(a.date));
+
 /** Отзывы линии: сначала про действие средств, затем остальные — от новых к старым. */
 export function reviewsFor(line?: string): Review[] {
   if (!line) return [];
-  return REVIEWS.filter((r) => r.line === line).sort(
-    (a, b) => Number(!!b.featured) - Number(!!a.featured) || dateKey(b.date).localeCompare(dateKey(a.date)),
-  );
+  return REVIEWS.filter((r) => r.line === line).sort(byPriority);
 }
 
 export const shotsFor = (line?: string) => (line ? REVIEW_SHOTS.filter((s) => s.line === line) : []);
+
+/** Для главной: все линии вперемешку — по одному избранному отзыву от каждой линии по очереди, дальше остальные. */
+export function allReviews(): Review[] {
+  const lines = [...new Set(REVIEWS.map((r) => r.line))].map((l) => reviewsFor(l));
+  const out: Review[] = [];
+  for (let i = 0; lines.some((l) => i < l.length); i++) for (const l of lines) if (l[i]) out.push(l[i]);
+  return out;
+}
 
 export function averageRating(reviews: Review[]): number {
   if (!reviews.length) return 0;
