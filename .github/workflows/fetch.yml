@@ -1,0 +1,14 @@
+name: fetch brand images
+on: { push: { branches: [tmp-brand-images] } }
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          mkdir out && cd out
+          for u in tild3061-3337-4239-b364-653037323732/5.jpg tild3161-3338-4031-a365-623330653566/6.jpg tild3030-6563-4463-b732-346165376236/7.jpg tild3364-3432-4433-b763-316536613734/1.jpg tild3239-3437-4861-b830-333735346635/2.jpg tild3033-3039-4331-a664-323134663335/1.png tild3763-6366-4433-b562-396630623436/Joy_is_the_best_make.svg tild3030-6636-4839-b862-313539373862/1.jpg; do
+            curl -fsSL -o "$(echo $u | tr '/' '_')" "https://static.tildacdn.pro/$u"
+          done
+          ls -la
+      - uses: actions/upload-artifact@v4
+        with: { name: brand, path: out }
