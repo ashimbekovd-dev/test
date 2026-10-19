@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "thb.tildacdn.com" },
     ],
   },
+  // Старые адреса с Tilda, чтобы ссылки из соцсетей и поиска не вели в 404
+  async redirects() {
+    return [{ source: "/brand", destination: "/about", permanent: true }];
+  },
 };
 
 export default nextConfig;

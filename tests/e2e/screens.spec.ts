@@ -111,3 +111,13 @@ test("отзывы с Kaspi: скриншоты открываются на са
   await expect(dialog).toBeHidden();
   expect(page.url()).toContain("/lines/intense-purifying-acne");
 });
+
+test("о бренде: история, вопросы о космецевтике, консультация", async ({ page }) => {
+  await page.goto("/brand");
+  await expect(page).toHaveURL(/\/about$/);
+  await expect(page.getByRole("heading", { level: 1, name: /Косметика с.заботой/ })).toBeVisible();
+  await expect(page.getByText("Жулдыз Сарсебекова").first()).toBeVisible();
+  await page.getByText("Какие преимущества у космецевтики?").click();
+  await expect(page.getByText("Без гормонов и парабенов.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Получить консультацию" })).toHaveAttribute("href", /wa\.me/);
+});
