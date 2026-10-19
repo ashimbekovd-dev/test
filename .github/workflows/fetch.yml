@@ -1,5 +1,6 @@
 name: fetch brand images
-on: { push: { branches: [tmp-brand-images] } }
+on: { push: { branches: [tmp-brand-images], paths: [.github/workflows/fetch.yml] } }
+permissions: { contents: write }
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -10,5 +11,9 @@ jobs:
             curl -fsSL -o "$(echo $u | tr '/' '_')" "https://static.tildacdn.pro/$u"
           done
           ls -la
-      - uses: actions/upload-artifact@v4
-        with: { name: brand, path: out }
+      - uses: actions/checkout@v4
+        with: { path: repo }
+      - run: |
+          mkdir -p repo/out && cp out/* repo/out/ && cd repo
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add out && git commit -m "images" && git push
