@@ -24,22 +24,22 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-milk/90 backdrop-blur">
       <div className="wrap flex h-16 items-center gap-4">
-        <button className="-ml-2 p-2 md:hidden" aria-label={open ? "Закрыть меню" : "Открыть меню"} aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        <button className="-ml-2 p-2 lg:hidden" aria-label={open ? "Закрыть меню" : "Открыть меню"} aria-expanded={open} onClick={() => setOpen((v) => !v)}>
           {open ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
         </button>
         <Logo />
-        <nav aria-label="Основное меню" className="ml-8 hidden gap-7 md:flex">
+        <nav aria-label="Основное меню" className="ml-8 hidden gap-5 lg:flex xl:gap-7">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className={`text-[14px] hover:text-moss ${pathname.startsWith(n.href) ? "text-moss" : ""}`}>
+            <Link key={n.href} href={n.href} className={`whitespace-nowrap text-[14px] hover:text-moss ${pathname.startsWith(n.href) ? "text-moss" : ""}`}>
               {n.label}
             </Link>
           ))}
         </nav>
-        <form action="/catalog" className="ml-auto hidden items-center rounded-full border border-line bg-white/60 px-3 lg:flex" role="search">
+        <form action="/catalog" className="ml-auto hidden items-center rounded-full border border-line bg-white/60 px-3 xl:flex" role="search">
           <SearchIcon className="size-4 text-mute" />
           <input name="q" placeholder="Найти средство" aria-label="Поиск по каталогу" className="h-10 w-52 bg-transparent px-2 text-[14px] outline-none" />
         </form>
-        <Link href="/catalog#search" className="ml-auto p-2 lg:hidden" aria-label="Поиск">
+        <Link href="/catalog#search" className="ml-auto p-2 xl:hidden" aria-label="Поиск">
           <SearchIcon className="size-6" />
         </Link>
         <Link href="/cart" className="relative -mr-2 p-2" aria-label={`Корзина${ready && count ? `, товаров: ${count}` : ""}`}>
@@ -52,7 +52,7 @@ export function Header() {
         </Link>
       </div>
       {open && (
-        <nav aria-label="Мобильное меню" className="border-t border-line md:hidden">
+        <nav aria-label="Мобильное меню" className="border-t border-line lg:hidden">
           <ul className="wrap py-2">
             {NAV.map((n) => (
               <li key={n.href}>

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ru_RU",
     siteName: "PIYOL'",
-    title: "PIYOL' — уход, в который можно влюбиться",
+    title: "PIYOL' — системный уход, научный подход",
     description: "Корейская космецевтика PIYOL'. Подбор ухода, заказ в WhatsApp, самовывоз в Алматы и доставка по Казахстану.",
     images: [{ url: "/hero-hydra-moist.jpg", width: 1600, height: 2400, alt: "Линия PIYOL' Active Hydra-Moist" }],
   },

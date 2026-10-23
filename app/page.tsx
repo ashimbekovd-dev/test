@@ -25,7 +25,7 @@ export default async function Home() {
     <>
       <section className="wrap grid items-end gap-8 pt-10 md:grid-cols-[1.1fr_0.9fr] md:pt-16">
         <div className="pb-4 md:pb-16">
-          <h1 className="text-[56px] leading-[0.95] sm:text-[76px] lg:text-[104px]">Уход, в который можно влюбиться</h1>
+          <h1 className="text-[52px] leading-[0.95] sm:text-[72px] lg:text-[84px] xl:text-[92px]"><span className="lg:block lg:whitespace-nowrap">Системный уход.</span> <span className="lg:block lg:whitespace-nowrap">Научный подход.</span></h1>
           <p className="mt-6 max-w-md text-[17px] text-mute">
             Корейская космецевтика и линии ухода PIYOL&rsquo;. Соберите корзину на сайте и отправьте заказ в WhatsApp, менеджер подтвердит наличие и доставку.
           </p>
