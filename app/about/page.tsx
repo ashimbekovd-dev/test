@@ -89,7 +89,7 @@ export default async function About() {
           </div>
         </div>
         <div className="relative mx-auto aspect-[4/5] w-full max-w-[480px] overflow-hidden arch bg-petal/60">
-          <Image src="/brand/founder-products.jpg" alt="Основательница PIYOL' с линией ухода Bio Cell Extra Collagen" fill priority sizes="(min-width: 768px) 42vw, 100vw" className="object-cover object-[30%_center]" />
+          <Image src="/brand/founder-hero.jpg" alt="Основательница PIYOL' с сывороткой PIYOL'" fill priority sizes="(min-width: 768px) 42vw, 100vw" className="object-cover object-top" />
         </div>
       </section>
 
@@ -108,7 +108,7 @@ export default async function About() {
       {/* ── Основательница ── */}
       <section className="mt-20 grid items-center gap-8 rounded-[32px] bg-petal/50 p-6 md:mt-28 md:grid-cols-[220px_1fr] md:gap-12 md:p-12">
         <div className="relative mx-auto size-44 overflow-hidden rounded-full md:size-[220px]">
-          <Image src="/brand/founder.png" alt="Жулдыз Сарсебекова, основательница PIYOL'" fill sizes="220px" className="object-cover" />
+          <Image src="/brand/founder-portrait.jpg" alt="Жулдыз Сарсебекова, основательница PIYOL'" fill sizes="220px" className="object-cover" />
         </div>
         <div>
           <span aria-hidden className="font-display text-[64px] leading-[0.5] text-rose">“</span>
@@ -129,7 +129,7 @@ export default async function About() {
       {/* ── Позиционирование ── */}
       <section className="mt-20 grid items-center gap-10 md:mt-28 md:grid-cols-[0.8fr_1.2fr] md:gap-16" aria-labelledby="positioning">
         <div className="relative mx-auto aspect-[400/460] w-full max-w-[360px] overflow-hidden arch bg-petal/60">
-          <Image src="/brand/positioning.jpg" alt="Ритуал PIYOL' Active Hydra-Moist" fill sizes="(min-width: 768px) 360px, 90vw" className="object-cover" />
+          <Image src="/brand/positioning.jpg" alt="Сыворотки PIYOL' EXO Polydeox Booster и EXO Gluta Care" fill sizes="(min-width: 768px) 360px, 90vw" className="object-cover" />
         </div>
         <div>
           <p className="text-[13px] uppercase tracking-[0.12em] text-mute">Позиционирование</p>
