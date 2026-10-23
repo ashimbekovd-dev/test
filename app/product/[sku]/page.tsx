@@ -7,6 +7,8 @@ import { AddToCartButton } from "@/components/AddToCartButton";
 import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { TrustStrip } from "@/components/TrustStrip";
 import { RichText } from "@/components/RichText";
+import { HowToVideo } from "@/components/HowToVideo";
+import { videoFor } from "@/lib/videos";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
@@ -55,6 +57,7 @@ export default async function ProductPage({ params }: Props) {
   const reviews = reviewsForProduct(product.sku, product.line);
   const concerns = product.concerns.map(getConcern).filter((c) => c !== undefined);
   const name = displayName(product.name);
+  const video = videoFor(product.sku);
 
   return (
     <div className="wrap pt-6 md:pt-10">
@@ -105,10 +108,11 @@ export default async function ProductPage({ params }: Props) {
               <RichText text={product.description} className="mt-3" />
             </section>
           )}
-          {paragraphs(product.howToUse).length > 0 && (
+          {(paragraphs(product.howToUse).length > 0 || video) && (
             <section className="mt-8 max-w-prose">
               <h2 className="text-2xl">Как применять</h2>
               <RichText text={product.howToUse} className="mt-3" />
+              {video && <HowToVideo video={video} title={name} poster={product.images[0]} />}
             </section>
           )}
           <div className="mt-8"><TrustStrip compact /></div>
