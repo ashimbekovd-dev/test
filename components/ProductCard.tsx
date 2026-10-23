@@ -8,7 +8,7 @@ import { displayName } from "@/lib/format";
 export function ProductCard({ product, priority }: { product: Product; priority?: boolean }) {
   const href = `/product/${encodeURIComponent(product.sku)}`;
   return (
-    <article className="group flex flex-col">
+    <article className="group flex w-full flex-col">
       <Link href={href} className="relative block aspect-[4/5] arch bg-petal/60">
         <ProductImage src={product.images[0]} alt={displayName(product.name)} sizes="(min-width: 1024px) 25vw, 50vw" priority={priority} />
         {product.oldPrice && (
@@ -23,7 +23,7 @@ export function ProductCard({ product, priority }: { product: Product; priority?
           <Link href={href} className="hover:text-moss">{displayName(product.name)}</Link>
         </h3>
         {product.nameRu && <p className="mt-0.5 text-[13px] leading-snug text-mute">{product.nameRu}</p>}
-        <div className="mt-auto pt-2">
+        <div className="mt-auto pt-3">
           <Price price={product.price} oldPrice={product.oldPrice} />
           <div className="mt-3"><AddToCartButton sku={product.sku} compact /></div>
         </div>
