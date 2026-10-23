@@ -4,18 +4,33 @@ import Link from "next/link";
 import { CONTACTS } from "@/lib/config";
 import { waLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/icons";
+import { LineCards } from "@/components/LineCards";
+import { BeforeAfterGallery } from "@/components/BeforeAfter";
+import { KaspiReviews } from "@/components/KaspiReviews";
+import { CASES } from "@/lib/cases";
+import { allReviews, averageRating, REVIEW_SHOTS, REVIEWS, reviewsWord } from "@/lib/reviews";
+import { getProducts } from "@/lib/products/source";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "О бренде",
-  description: "PIYOL' — космецевтика с заботой. Эксклюзивные составы, созданные вместе с технологами Южной Кореи.",
+  description: "PIYOL' — система ухода для улучшения качества кожи в домашних условиях. Клинические компоненты, корейское производство, понятный ритуал.",
 };
 
-const PARTNERS = ["l'mele", "la muse", "Mom's Bath Recipe", "belusta", "let me skin", "Wellderma", "allthat2ne's", "moremo"];
-
-const PRINCIPLES = [
-  { label: "Позиционирование", text: "Дать женщинам ритуал, который усилит их любовь к себе." },
-  { label: "Видение", text: "Научить женщин быть прекрасными с помощью новейших разработок в космецевтике и уходе." },
-  { label: "Слоган", text: "Открой свою вселенную!" },
+const USP = [
+  {
+    title: "Клинические компоненты дома",
+    text: "PDRN, пептиды, многослойная гиалуроновая кислота — компоненты, с которыми работают в корейских косметологических клиниках.",
+  },
+  {
+    title: "Корейское производство, локальная адаптация",
+    text: "Средства производятся в Южной Корее, а линейка разработана под сухой воздух, перепады температур и задачи кожи 35+.",
+  },
+  {
+    title: "Система, а не набор баночек",
+    text: "Вы понимаете, что, когда и в каком порядке наносить, и видите результат регулярного ухода. Средства сочетаются между собой, поэтому качество кожи улучшается постоянно.",
+  },
 ];
 
 const FAQ: { q: string; a: string[] }[] = [
@@ -45,7 +60,15 @@ const FAQ: { q: string; a: string[] }[] = [
   },
 ];
 
-export default function About() {
+export default async function About() {
+  const products = await getProducts();
+  const stats = [
+    { value: "2022", label: "год основания бренда" },
+    { value: "Корея", label: "производство на заводах Южной Кореи" },
+    { value: "10 000+", label: "реальных кейсов до и после" },
+    { value: `${averageRating(REVIEWS).toFixed(1).replace(".", ",")} ★`, label: `${REVIEWS.length} ${reviewsWord(REVIEWS.length)} на Kaspi` },
+  ];
+
   return (
     <div className="wrap pt-6 md:pt-10">
       {/* ── Герой ── */}
@@ -57,8 +80,8 @@ export default function About() {
             Мы дарим вам ритуал, вы дарите любовь к самой себе.
           </p>
           <p className="mt-6 max-w-lg text-[17px]">
-            PIYOL&rsquo; — молодой бренд космецевтики. Мы начали свой путь в 2022 году с разработки уходовых средств и
-            создаём эксклюзивные составы вместе с технологами Южной Кореи на лучших корейских заводах.
+            PIYOL&rsquo; — система ухода для улучшения качества кожи в домашних условиях. Мы начали свой путь в 2022 году
+            и создаём эксклюзивные составы вместе с технологами Южной Кореи на лучших корейских заводах.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/quiz" className="btn bg-ink text-white hover:bg-ink/85">Подобрать уход</Link>
@@ -68,6 +91,18 @@ export default function About() {
         <div className="relative mx-auto aspect-[4/5] w-full max-w-[480px] overflow-hidden arch bg-petal/60">
           <Image src="/brand/founder-products.jpg" alt="Основательница PIYOL' с линией ухода Bio Cell Extra Collagen" fill priority sizes="(min-width: 768px) 42vw, 100vw" className="object-cover object-[30%_center]" />
         </div>
+      </section>
+
+      {/* ── Цифры доверия ── */}
+      <section aria-label="PIYOL' в цифрах" className="mt-14 md:mt-20">
+        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-[28px] border border-line bg-line md:grid-cols-4">
+          {stats.map((s) => (
+            <li key={s.label} className="bg-milk px-5 py-6 md:px-8 md:py-8">
+              <p className="font-display text-[38px] leading-none text-rose md:text-[52px]">{s.value}</p>
+              <p className="mt-2 text-[14px] text-mute">{s.label}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ── Основательница ── */}
@@ -91,36 +126,68 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Что мы делаем ── */}
-      <section className="mt-20 grid items-center gap-10 md:mt-28 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-        <div className="relative mx-auto aspect-[400/460] w-full max-w-[360px] overflow-hidden rounded-[28px] bg-petal/60">
+      {/* ── Позиционирование ── */}
+      <section className="mt-20 grid items-center gap-10 md:mt-28 md:grid-cols-[0.8fr_1.2fr] md:gap-16" aria-labelledby="positioning">
+        <div className="relative mx-auto aspect-[400/460] w-full max-w-[360px] overflow-hidden arch bg-petal/60">
           <Image src="/brand/formulas.jpg" alt="Средства PIYOL' Bio Cell Extra Collagen" fill sizes="360px" className="object-cover" />
         </div>
         <div>
-          <h2 className="text-[38px] leading-tight md:text-[52px]">Исключительные составы. Новейшие разработки. Эффективный уход.</h2>
+          <p className="text-[13px] uppercase tracking-[0.12em] text-mute">Позиционирование</p>
+          <h2 id="positioning" className="mt-3 text-[34px] leading-tight md:text-[48px]">
+            Система ухода для улучшения качества кожи в&nbsp;домашних условиях
+          </h2>
           <p className="mt-5 max-w-prose text-[17px]">
-            Мы выпускаем космецевтическую линию ухода, которой пользуются и профессиональные косметологи, и те, кто
-            просто любит заботиться о себе.
+            Бренд помогает женщинам справиться с главными проявлениями возрастных изменений: сухостью, тусклостью,
+            пигментацией, потерей упругости и морщинами.
           </p>
-          <ul className="mt-6 space-y-2 text-[16px]">
-            {["Производство на заводах Южной Кореи", "Составы, разработанные с корейскими технологами", "Для профессионального и домашнего ухода"].map((t) => (
-              <li key={t} className="flex gap-3"><span aria-hidden className="text-rose">✦</span>{t}</li>
-            ))}
-          </ul>
+          <p className="mt-4 max-w-prose text-[17px]">
+            Мы превращаем хаотичный уход в понятную систему, которая помогает коже выглядеть более увлажнённой, плотной,
+            сияющей и ухоженной.
+          </p>
         </div>
       </section>
 
-      {/* ── Позиционирование / видение / слоган ── */}
-      <section className="mt-20 md:mt-28" aria-labelledby="principles">
-        <h2 id="principles" className="text-[38px] md:text-[52px]">Во что мы верим</h2>
-        <ul className="mt-8 grid gap-4 md:grid-cols-3">
-          {PRINCIPLES.map((p, i) => (
-            <li key={p.label} className={`rounded-[28px] p-6 md:p-8 ${i === 1 ? "bg-sage/70" : "bg-petal/55"}`}>
-              <p className="text-[13px] uppercase tracking-[0.12em] text-mute">{p.label}</p>
-              <p className="mt-3 font-display text-[26px] leading-tight md:text-[30px]">{p.text}</p>
+      {/* ── УТП ── */}
+      <section className="mt-16 md:mt-24" aria-labelledby="usp">
+        <h2 id="usp" className="text-[38px] md:text-[52px]">Почему PIYOL&rsquo;</h2>
+        <ol className="mt-8 grid gap-4 md:grid-cols-3">
+          {USP.map((u, i) => (
+            <li key={u.title} className={`flex flex-col rounded-[28px] p-6 md:p-8 ${i === 1 ? "bg-sage/70" : "bg-petal/55"}`}>
+              <span className="font-display text-[56px] leading-none text-rose md:text-[72px]">0{i + 1}</span>
+              <h3 className="mt-4 font-display text-[26px] leading-tight md:text-[30px]">{u.title}</h3>
+              <p className="mt-3 text-[16px] leading-relaxed">{u.text}</p>
             </li>
           ))}
-        </ul>
+        </ol>
+      </section>
+
+      {/* ── Слоган ── */}
+      <section aria-label="Слоган" className="relative left-1/2 mt-20 w-screen -translate-x-1/2 overflow-hidden bg-ink py-16 text-milk md:mt-28 md:py-24">
+        <span aria-hidden className="absolute left-[8%] top-8 text-[28px] text-petal/60 md:text-[40px]">✦</span>
+        <span aria-hidden className="absolute bottom-10 left-[22%] text-[16px] text-petal/40">✦</span>
+        <span aria-hidden className="absolute right-[10%] top-12 text-[20px] text-petal/50 md:text-[28px]">✦</span>
+        <span aria-hidden className="absolute bottom-8 right-[24%] text-[32px] text-petal/60 md:text-[48px]">✦</span>
+        <div className="wrap text-center">
+          <p className="font-display text-[44px] leading-[0.95] md:text-[88px]">PIYOL&rsquo; — your skin system</p>
+          <p className="mt-5 font-display text-[22px] text-petal md:text-[30px]">Открой свою вселенную!</p>
+        </div>
+      </section>
+
+      {/* ── Линии ── */}
+      <section className="mt-20 md:mt-28" aria-labelledby="about-lines">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 id="about-lines" className="text-[38px] md:text-[52px]">Наши линии ухода</h2>
+          <Link href="/quiz" className="text-[15px] underline underline-offset-4 hover:text-moss">Не знаете, с чего начать? Пройдите подбор</Link>
+        </div>
+        <div className="mt-8"><LineCards products={products} /></div>
+      </section>
+
+      {/* ── Результаты ── */}
+      <section className="mt-20 md:mt-28" aria-labelledby="about-results">
+        <h2 id="about-results" className="text-[38px] md:text-[52px]">Результаты клиенток</h2>
+        <p className="mt-2 max-w-prose text-mute">Более 10 000 реальных кейсов до и после — вот несколько из них.</p>
+        <div className="mt-8"><BeforeAfterGallery cases={CASES.slice(0, 4)} /></div>
+        <div className="mt-12"><KaspiReviews reviews={allReviews()} shots={REVIEW_SHOTS} limit={3} showLine /></div>
       </section>
 
       {/* ── FAQ: космецевтика ── */}
@@ -169,18 +236,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Бренды-партнёры ── */}
-      <section className="mt-20 md:mt-28" aria-labelledby="partners">
-        <h2 id="partners" className="text-[32px] md:text-[40px]">Бренды-партнёры</h2>
-        <p className="mt-2 text-mute">Кроме линий PIYOL&rsquo;, в каталоге — корейские бренды:</p>
-        <ul className="mt-5 flex flex-wrap gap-2">
-          {PARTNERS.map((b) => (
-            <li key={b}>
-              <Link href={`/catalog?brand=${encodeURIComponent(b)}`} className="inline-block rounded-full border border-line px-4 py-2 hover:border-ink/40">{b}</Link>
-            </li>
-          ))}
-        </ul>
-      </section>
     </div>
   );
 }
