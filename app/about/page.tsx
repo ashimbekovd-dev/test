@@ -129,7 +129,7 @@ export default async function About() {
       {/* ── Позиционирование ── */}
       <section className="mt-20 grid items-center gap-10 md:mt-28 md:grid-cols-[0.8fr_1.2fr] md:gap-16" aria-labelledby="positioning">
         <div className="relative mx-auto aspect-[400/460] w-full max-w-[360px] overflow-hidden arch bg-petal/60">
-          <Image src="/brand/formulas.jpg" alt="Средства PIYOL' Bio Cell Extra Collagen" fill sizes="360px" className="object-cover" />
+          <Image src="/brand/positioning.jpg" alt="Ритуал PIYOL' Active Hydra-Moist" fill sizes="(min-width: 768px) 360px, 90vw" className="object-cover" />
         </div>
         <div>
           <p className="text-[13px] uppercase tracking-[0.12em] text-mute">Позиционирование</p>
