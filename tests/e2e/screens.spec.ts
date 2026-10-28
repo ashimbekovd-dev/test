@@ -121,3 +121,13 @@ test("о бренде: история, вопросы о космецевтик�
   await expect(page.getByText("Без гормонов и парабенов.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Получить консультацию" })).toHaveAttribute("href", /wa\.me/);
 });
+
+test("видео «Как применять» в карточке товара", async ({ page }) => {
+  await page.goto("/product/ACTIVE-HYDRA-MOIST-SERUM");
+  const video = page.locator("video");
+  await expect(video).toHaveCount(1);
+  await expect(video).toHaveAttribute("poster", "/videos/active-hydra-moist-serum.jpg");
+  await expect(video.locator("source")).toHaveAttribute("src", "/videos/active-hydra-moist-serum.mp4");
+  await page.goto("/product/ACTIVE-HYDRA-MOIST-CLEANSING-FOAM");
+  await expect(page.locator("video")).toHaveCount(0);
+});
