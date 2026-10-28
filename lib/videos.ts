@@ -25,6 +25,10 @@ export const VIDEOS: Record<string, string> = {
   "INTENSE-PURIFYING-ACNE-TONER": "/videos/intense-purifying-acne-toner.mp4",
   "INTENSE-PURIFYING-ACNE-SERUM": "/videos/intense-purifying-acne-serum.mp4",
   "PAPAYA-CLEANSING-ENZYME-POWDER": "/videos/papaya-enzyme-powder.mp4",
+  "RELIEF-SOOTHING-TONER": "/videos/relief-soothing-toner.mp4",
+  "DEEP-CLEANSING-PAD": "/videos/deep-cleansing-pad.mp4",
+  "SPA-RELAXING-GLOW-SILK-HAIR-OIL": "/videos/spa-relaxing-glow-silk-hair-oil.mp4",
+  "NECK-EYE-REPAIR-SERUM": "/videos/neck-eye-repair-serum.mp4",
 };
 
 export function parseVideo(value?: string): HowToVideo | undefined {
