@@ -29,6 +29,11 @@ export const VIDEOS: Record<string, string> = {
   "DEEP-CLEANSING-PAD": "/videos/deep-cleansing-pad.mp4",
   "SPA-RELAXING-GLOW-SILK-HAIR-OIL": "/videos/spa-relaxing-glow-silk-hair-oil.mp4",
   "NECK-EYE-REPAIR-SERUM": "/videos/neck-eye-repair-serum.mp4",
+  "BIOME-STEM-CELL-GLOW-CREAM": "/videos/biome-stem-cell-glow-cream.mp4",
+  "COLLAGEN-A-COMPLEX-AMPOULE": "/videos/collagen-a-complex-ampoule.mp4",
+  "DETOX-WINE-PEELING-EXFOLIANT": "/videos/detox-wine-peeling-exfoliant.mp4",
+  "EXO-POLYDEOX-BOOSTER-SERUM": "/videos/exo-polydeox-booster-serum.mp4",
+  "EXO-VITALITY-INTENSER-SERUM": "/videos/exo-vitality-intenser-serum.mp4",
 };
 
 export function parseVideo(value?: string): HowToVideo | undefined {
