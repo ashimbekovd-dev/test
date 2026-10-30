@@ -91,3 +91,55 @@ export function storeJsonLd() {
 
 /** JSON для <script type="application/ld+json">: экранируем «<», чтобы текст отзывов не ломал страницу. */
 export const ldJson = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c");
+
+/** Хлебные крошки для Google: «Главная › Каталог › Раздел › Товар» под ссылкой в выдаче. */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({ "@type": "ListItem", position: i + 1, name: it.name, item: absoluteUrl(it.path) })),
+  };
+}
+
+/** Ритуал: список шагов-товаров с ценами. */
+export function ritualJsonLd(name: string, path: string, steps: Product[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    url: absoluteUrl(path),
+    numberOfItems: steps.length,
+    itemListElement: steps.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: absoluteUrl(`/product/${encodeURIComponent(p.sku)}`),
+      name: displayName(p.name),
+    })),
+  };
+}
+
+/** Вопросы и ответы (FAQ). */
+export function faqJsonLd(faq: { q: string; a: string[] }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a.join(" ").replace(/•\s*/g, "") },
+    })),
+  };
+}
+
+/** Видео «Как применять» — может показываться в Google Видео. */
+export function videoJsonLd(p: Product, src: string, poster: string | undefined, uploadDate = "2026-10-28") {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: `Как применять ${displayName(p.name)}`,
+    description: `Как применять ${displayName(p.name)}${p.nameRu ? ` — ${p.nameRu.toLowerCase()}` : ""} PIYOL'.`,
+    thumbnailUrl: [abs(poster ?? p.images[0])],
+    contentUrl: abs(src),
+    uploadDate,
+  };
+}

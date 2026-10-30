@@ -10,11 +10,14 @@ import { KaspiReviews } from "@/components/KaspiReviews";
 import { CASES } from "@/lib/cases";
 import { allReviews, averageRating, REVIEW_SHOTS, REVIEWS, reviewsWord } from "@/lib/reviews";
 import { getProducts } from "@/lib/products/source";
+import { JsonLd } from "@/components/JsonLd";
+import { faqJsonLd } from "@/lib/seo";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "О бренде",
+  title: "О бренде — корейская космецевтика",
+  alternates: { canonical: "/about" },
   description: "PIYOL' — система ухода для улучшения качества кожи в домашних условиях. Клинические компоненты, корейское производство, понятный ритуал.",
 };
 
@@ -71,6 +74,7 @@ export default async function About() {
 
   return (
     <div className="wrap pt-6 md:pt-10">
+      <JsonLd data={faqJsonLd(FAQ)} />
       {/* ── Герой ── */}
       <section className="grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
         <div>

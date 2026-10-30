@@ -5,9 +5,34 @@ import { parseCatalogQuery, queryCatalog } from "@/lib/catalog/query";
 import { CatalogFilters } from "@/components/CatalogFilters";
 import { ProductGrid } from "@/components/ProductGrid";
 import { getConcern } from "@/lib/concerns";
+import { CATALOG_SEO, CATEGORY_SEO, CONCERN_SEO } from "@/lib/seo-pages";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "Каталог" };
+type SP = { searchParams: Promise<Record<string, string | string[] | undefined>> };
+
+export async function generateMetadata({ searchParams }: SP): Promise<Metadata> {
+  const query = parseCatalogQuery(await searchParams);
+  const only = (k: "category" | "concern") =>
+    !!query[k] && !query.q && !query.brand && (query.sort ?? "default") === "default" && !query[k === "category" ? "concern" : "category"];
+  let page = CATALOG_SEO;
+  let canonical = "/catalog";
+  if (only("category") && CATEGORY_SEO[query.category!]) {
+    page = CATEGORY_SEO[query.category!];
+    canonical = `/catalog?category=${encodeURIComponent(query.category!)}`;
+  } else if (only("concern") && CONCERN_SEO[query.concern!]) {
+    page = CONCERN_SEO[query.concern!];
+    canonical = `/catalog?concern=${encodeURIComponent(query.concern!)}`;
+  }
+  // Поиск, сортировка и сочетания фильтров — служебные страницы: в выдачу не нужны
+  const isClean = canonical !== "/catalog" || (!query.q && !query.brand && !query.category && !query.concern && (query.sort ?? "default") === "default");
+  return {
+    title: { absolute: page.title },
+    description: page.description,
+    alternates: { canonical },
+    robots: isClean ? undefined : { index: false, follow: true },
+    openGraph: { title: page.title, description: page.description, url: canonical },
+  };
+}
 
 function plural(n: number) {
   const m10 = n % 10, m100 = n % 100;
@@ -27,6 +52,9 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
     <div className="wrap pt-8 md:pt-12">
       <h1 className="text-[44px] md:text-[64px]">{title}</h1>
       {concern && <p className="mt-3 max-w-xl text-[17px]">{concern.lead}</p>}
+      {!concern && query.category && CATEGORY_SEO[query.category]?.intro && (
+        <p className="mt-3 max-w-2xl text-[16px] text-ink/80">{CATEGORY_SEO[query.category].intro}</p>
+      )}
       <p className="mt-1 text-mute">{results.length} {plural(results.length)}</p>
       <div className="mt-6"><CatalogFilters query={query} categories={getCategories(products)} brands={getBrands(products)} /></div>
       <div className="mt-10">

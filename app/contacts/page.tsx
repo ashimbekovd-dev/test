@@ -4,7 +4,11 @@ import { waLink } from "@/lib/whatsapp";
 import { InfoPage } from "@/components/InfoPage";
 import { WhatsAppIcon } from "@/components/icons";
 
-export const metadata: Metadata = { title: "Контакты" };
+export const metadata: Metadata = {
+  title: "Контакты и магазин в Алматы",
+  description: "Магазин PIYOL' в Алматы: ул. Жандосова, 310г (мкр Таугуль-3), ежедневно с 9:00 до 21:00. WhatsApp, телефон, Instagram и Telegram.",
+  alternates: { canonical: "/contacts" },
+};
 
 export default function Contacts() {
   return (

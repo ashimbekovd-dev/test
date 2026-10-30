@@ -3,7 +3,11 @@ import { CONTACTS, DELIVERY_FROM } from "@/lib/config";
 import { formatPrice } from "@/lib/format";
 import { InfoPage } from "@/components/InfoPage";
 
-export const metadata: Metadata = { title: "Доставка и оплата" };
+export const metadata: Metadata = {
+  title: "Доставка и оплата",
+  description: "Доставка корейской косметики PIYOL' по Алматы и всему Казахстану, самовывоз из магазина на ул. Жандосова. Заказ в WhatsApp, оплата после подтверждения.",
+  alternates: { canonical: "/delivery" },
+};
 
 export default function Delivery() {
   return (

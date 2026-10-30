@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { getProducts } from "@/lib/products/source";
 import { LINES } from "@/lib/lines";
 import { absoluteUrl } from "@/lib/site";
+import { CATEGORY_SEO, CONCERN_SEO } from "@/lib/seo-pages";
+import { getCategories } from "@/lib/products/source";
 
 export const revalidate = 3600;
 
@@ -22,5 +24,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
     images: p.images.slice(0, 1).map((src) => (src.startsWith("http") ? src : absoluteUrl(src))),
   }));
-  return [...pages, ...lines, ...items];
+  // Разделы и задачи кожи — только те, где есть товары и свой текст для поиска
+  const categories = getCategories(products)
+    .filter((c) => CATEGORY_SEO[c])
+    .map((c) => ({ url: absoluteUrl(`/catalog?category=${encodeURIComponent(c)}`), changeFrequency: "weekly" as const, priority: 0.8 }));
+  const concerns = Object.keys(CONCERN_SEO)
+    .filter((slug) => products.some((p) => p.concerns.includes(slug)))
+    .map((slug) => ({ url: absoluteUrl(`/catalog?concern=${slug}`), changeFrequency: "weekly" as const, priority: 0.8 }));
+  return [...pages, ...lines, ...categories, ...concerns, ...items];
 }

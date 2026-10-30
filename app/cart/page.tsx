@@ -3,7 +3,7 @@ import { getProducts } from "@/lib/products/source";
 import { CartView } from "@/components/cart/CartView";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "Корзина" };
+export const metadata: Metadata = { title: "Корзина", robots: { index: false, follow: false } };
 
 export default async function CartPage() {
   return (

@@ -12,6 +12,8 @@ import { getProducts } from "@/lib/products/source";
 import { buildRitualMessage, waLink } from "@/lib/whatsapp";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbJsonLd, ritualJsonLd } from "@/lib/seo";
 import { KaspiReviews } from "@/components/KaspiReviews";
 import { reviewsFor, shotsFor } from "@/lib/reviews";
 
@@ -25,7 +27,20 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const line = getLine((await params).slug);
-  return line ? { title: `Линия ${line.name}`, description: line.tagline } : {};
+  if (!line) return {};
+  const steps = lineProducts(await getProducts(), line.slug);
+  const total = steps.reduce((s, p) => s + p.price, 0);
+  const n = steps.length;
+  const word = n % 10 === 1 && n % 100 !== 11 ? "шаг" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "шага" : "шагов";
+  const title = `Ритуал ${line.name}: ${n} ${word} ухода`;
+  const description = `${line.tagline} Весь ритуал — ${formatPrice(total)}, каждое средство можно купить отдельно. Доставка по Казахстану.`;
+  const path = `/lines/${line.slug}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { title: `${title} — PIYOL'`, description, url: path, images: [{ url: line.photo }] },
+  };
 }
 
 export default async function LinePage({ params }: Props) {
@@ -40,6 +55,14 @@ export default async function LinePage({ params }: Props) {
 
   return (
     <div className="wrap pt-6 md:pt-10">
+      <JsonLd data={ritualJsonLd(`Ритуал ${line.name}`, `/lines/${line.slug}`, steps)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Главная", path: "/" },
+          { name: "Линии ухода", path: `/catalog?category=${encodeURIComponent("Линии ухода PIYOL'")}` },
+          { name: line.name, path: `/lines/${line.slug}` },
+        ])}
+      />
       <nav aria-label="Навигация" className="text-[13px] text-mute">
         <Link href="/catalog" className="hover:text-ink">Каталог</Link>
         <span aria-hidden> / </span>

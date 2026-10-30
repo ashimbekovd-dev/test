@@ -35,3 +35,34 @@ describe("SEO", () => {
     expect(ldJson({ a: "</script>" })).not.toContain("</script>");
   });
 });
+
+import { CATEGORY_SEO, CONCERN_SEO, HOME_SEO, CATALOG_SEO, productSeoDescription } from "@/lib/seo-pages";
+import { breadcrumbJsonLd, faqJsonLd, ritualJsonLd } from "@/lib/seo";
+import { CONCERNS } from "@/lib/concerns";
+
+describe("SEO-тексты", () => {
+  it("заголовки не длиннее 60, описания не длиннее 170", () => {
+    for (const p of [HOME_SEO, CATALOG_SEO, ...Object.values(CATEGORY_SEO), ...Object.values(CONCERN_SEO)]) {
+      expect(p.title.length, p.title).toBeLessThanOrEqual(60);
+      expect(p.description.length, p.description).toBeLessThanOrEqual(170);
+    }
+  });
+  it("есть текст для каждой задачи кожи и каждого раздела каталога", () => {
+    for (const c of CONCERNS) expect(CONCERN_SEO[c.slug], c.slug).toBeDefined();
+    for (const cat of new Set(products.map((p) => p.category))) if (cat !== "PIYOL'") expect(CATEGORY_SEO[cat], cat).toBeDefined();
+  });
+  it("описание товара с ценой укладывается в 160", () => {
+    const d = productSeoDescription("а".repeat(300), "18 600 ₸");
+    expect(d.length).toBeLessThanOrEqual(160);
+    expect(d).toContain("Цена 18 600 ₸");
+  });
+  it("крошки, ритуал, FAQ", () => {
+    const b = breadcrumbJsonLd([{ name: "Главная", path: "/" }, { name: "Каталог", path: "/catalog" }]) as any;
+    expect(b.itemListElement[1]).toMatchObject({ position: 2, name: "Каталог" });
+    expect(b.itemListElement[1].item).toMatch(/^https:\/\/.+\/catalog$/);
+    const r = ritualJsonLd("Ритуал X", "/lines/x", products.slice(0, 3)) as any;
+    expect(r.numberOfItems).toBe(3);
+    const f = faqJsonLd([{ q: "Вопрос?", a: ["• один", "• два"] }]) as any;
+    expect(f.mainEntity[0].acceptedAnswer.text).toBe("один два");
+  });
+});

@@ -4,7 +4,8 @@ import { getProducts } from "@/lib/products/source";
 
 export const revalidate = 300;
 export const metadata: Metadata = {
-  title: "Подбор ухода",
+  title: "Подбор ухода за кожей за 1 минуту",
+  alternates: { canonical: "/quiz" },
   description: "Пять вопросов о коже — и готовая программа ухода PIYOL' с ценой. Можно сразу заказать или обсудить с консультантом.",
 };
 

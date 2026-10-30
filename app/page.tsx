@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getCategories, getProducts } from "@/lib/products/source";
 import { CONTACTS, DELIVERY_FROM } from "@/lib/config";
@@ -13,6 +14,8 @@ import { CASES } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
 import { JsonLd } from "@/components/JsonLd";
 import { storeJsonLd } from "@/lib/seo";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 import { allReviews, REVIEW_SHOTS } from "@/lib/reviews";
 
 export const revalidate = 300;

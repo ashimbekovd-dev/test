@@ -10,7 +10,9 @@ import { RichText } from "@/components/RichText";
 import { HowToVideo } from "@/components/HowToVideo";
 import { videoFor } from "@/lib/videos";
 import { JsonLd } from "@/components/JsonLd";
-import { productJsonLd, shortDescription } from "@/lib/seo";
+import { breadcrumbJsonLd, productJsonLd, shortDescription, videoJsonLd } from "@/lib/seo";
+import { productSeoDescription } from "@/lib/seo-pages";
+import { formatPrice } from "@/lib/format";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
@@ -34,7 +36,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = await getProduct(decodeURIComponent((await params).sku));
   if (!p) return {};
-  const description = shortDescription(p);
+  const description = productSeoDescription(shortDescription(p, 200), formatPrice(p.price));
   const path = `/product/${encodeURIComponent(p.sku)}`;
   return {
     title: p.nameRu ? `${displayName(p.name)} — ${p.nameRu.toLowerCase()}` : displayName(p.name),
@@ -66,6 +68,15 @@ export default async function ProductPage({ params }: Props) {
   return (
     <div className="wrap pt-6 md:pt-10">
       <JsonLd data={productJsonLd(product, reviews.own ? reviews.reviews : [])} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Главная", path: "/" },
+          { name: "Каталог", path: "/catalog" },
+          { name: product.category, path: `/catalog?category=${encodeURIComponent(product.category)}` },
+          { name, path: `/product/${encodeURIComponent(product.sku)}` },
+        ])}
+      />
+      {video?.kind === "file" && <JsonLd data={videoJsonLd(product, video.src, video.poster)} />}
       <nav aria-label="Навигация" className="text-[13px] text-mute">
         <Link href="/catalog" className="hover:text-ink">Каталог</Link>
         <span aria-hidden> / </span>

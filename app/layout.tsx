@@ -7,17 +7,27 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { SITE_URL } from "@/lib/site";
+import { HOME_SEO } from "@/lib/seo-pages";
+
+const isProduction = !process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production";
 
 export const metadata: Metadata = {
-  title: { default: "PIYOL' — корейская косметика в Алматы", template: "%s — PIYOL'" },
-  description: "Каталог корейской косметики PIYOL'. Заказ в WhatsApp, самовывоз из магазина в Алматы.",
+  title: { default: HOME_SEO.title, template: "%s — PIYOL'" },
+  description: HOME_SEO.description,
+  // Тестовые копии сайта (preview) не должны попадать в поиск
+  robots: isProduction ? { index: true, follow: true } : { index: false, follow: false },
+  // Коды подтверждения из Google Search Console и Яндекс Вебмастера — задаются в Vercel
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || undefined,
+  },
   metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "ru_RU",
     siteName: "PIYOL'",
     title: "PIYOL' — системный уход, научный подход",
-    description: "Корейская космецевтика PIYOL'. Подбор ухода, заказ в WhatsApp, самовывоз в Алматы и доставка по Казахстану.",
+    description: HOME_SEO.description,
     images: [{ url: "/hero-hydra-moist.jpg", width: 1600, height: 2400, alt: "Линия PIYOL' Active Hydra-Moist" }],
   },
 };
