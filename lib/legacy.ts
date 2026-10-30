@@ -3,21 +3,12 @@
  * Нужны, чтобы ссылки из Instagram, Google и закладок не вели в «страница не найдена».
  */
 
-const CAT = (c: string) => `/catalog?category=${encodeURIComponent(c)}`;
 
 /** Разделы старого сайта */
 export const LEGACY_PAGES: Record<string, string> = {
   "/brand": "/about",
   "/aboutus": "/about",
-  "/piyol": CAT("Космецевтика PIYOL'"),
-  "/uhodovie": CAT("Линии ухода PIYOL'"),
-  "/ochishenie": CAT("Очищение"),
-  "/dopoln": CAT("Дополнительный уход"),
-  "/uhodzatelom": CAT("Уход за телом"),
-  "/uhodzavolosami": CAT("Уход за волосами"),
-  "/dekorativnaya": CAT("Макияж"),
-  "/uvlazhnenie": "/catalog?concern=moisture",
-  "/gotovie": "/#lines",
+  "/gotovie": "/uhodovie",
   "/podarochnie": "/catalog",
   "/dorozhnie": "/catalog",
   "/bestseller": "/catalog",

@@ -4,6 +4,7 @@ import { LINES } from "@/lib/lines";
 import { absoluteUrl } from "@/lib/site";
 import { CATEGORY_SEO, CONCERN_SEO } from "@/lib/seo-pages";
 import { getCategories } from "@/lib/products/source";
+import { catalogHref, categoryHref } from "@/lib/sections";
 
 export const revalidate = 3600;
 
@@ -27,9 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Разделы и задачи кожи — только те, где есть товары и свой текст для поиска
   const categories = getCategories(products)
     .filter((c) => CATEGORY_SEO[c])
-    .map((c) => ({ url: absoluteUrl(`/catalog?category=${encodeURIComponent(c)}`), changeFrequency: "weekly" as const, priority: 0.8 }));
+    .map((c) => ({ url: absoluteUrl(categoryHref(c)), changeFrequency: "weekly" as const, priority: 0.8 }));
   const concerns = Object.keys(CONCERN_SEO)
     .filter((slug) => products.some((p) => p.concerns.includes(slug)))
-    .map((slug) => ({ url: absoluteUrl(`/catalog?concern=${slug}`), changeFrequency: "weekly" as const, priority: 0.8 }));
+    .map((slug) => ({ url: absoluteUrl(catalogHref({ concern: slug })), changeFrequency: "weekly" as const, priority: 0.8 }));
   return [...pages, ...lines, ...categories, ...concerns, ...items];
 }

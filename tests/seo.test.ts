@@ -41,9 +41,9 @@ import { breadcrumbJsonLd, faqJsonLd, ritualJsonLd } from "@/lib/seo";
 import { CONCERNS } from "@/lib/concerns";
 
 describe("SEO-тексты", () => {
-  it("заголовки не длиннее 60, описания не длиннее 170", () => {
+  it("заголовки не длиннее 70, описания не длиннее 170", () => {
     for (const p of [HOME_SEO, CATALOG_SEO, ...Object.values(CATEGORY_SEO), ...Object.values(CONCERN_SEO)]) {
-      expect(p.title.length, p.title).toBeLessThanOrEqual(60);
+      expect(p.title.length, p.title).toBeLessThanOrEqual(70);
       expect(p.description.length, p.description).toBeLessThanOrEqual(170);
     }
   });

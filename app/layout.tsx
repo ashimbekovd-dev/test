@@ -6,6 +6,7 @@ import { CartProvider } from "@/components/cart/CartProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { Analytics } from "@/components/Analytics";
 import { SITE_URL } from "@/lib/site";
 import { HOME_SEO } from "@/lib/seo-pages";
 
@@ -16,10 +17,12 @@ export const metadata: Metadata = {
   description: HOME_SEO.description,
   // Тестовые копии сайта (preview) не должны попадать в поиск
   robots: isProduction ? { index: true, follow: true } : { index: false, follow: false },
-  // Коды подтверждения из Google Search Console и Яндекс Вебмастера — задаются в Vercel
+  // Коды подтверждения Google Search Console, Яндекс Вебмастера и Facebook — те же, что на Tilda,
+  // чтобы после переезда права на сайт в этих сервисах сохранились
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || undefined,
+    google: ["6Nfq1ECjh-z_LQDkg3maISRRiMNo_t5tbKe5SN2TpJQ", "v_v3D7d-MWVmhsoM9snZl6aoOxH5SLrB8h0zL1P11Bg"],
+    yandex: "279c9cd19deec908",
+    other: { "facebook-domain-verification": "7bhgakwcdog9qxnd8fgwgjswapv52c" },
   },
   metadataBase: new URL(SITE_URL),
   openGraph: {
@@ -46,6 +49,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main" className="flex-1">{children}</main>
           <Footer />
           <WhatsAppFab />
+          <Analytics />
         </CartProvider>
       </body>
     </html>

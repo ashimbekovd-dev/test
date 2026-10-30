@@ -59,7 +59,7 @@ export default async function LinePage({ params }: Props) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Главная", path: "/" },
-          { name: "Линии ухода", path: `/catalog?category=${encodeURIComponent("Линии ухода PIYOL'")}` },
+          { name: "Линии ухода", path: "/uhodovie" },
           { name: line.name, path: `/lines/${line.slug}` },
         ])}
       />

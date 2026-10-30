@@ -5,17 +5,9 @@ import { useRouter } from "next/navigation";
 import type { CatalogQuery } from "@/lib/catalog/query";
 import { SearchIcon } from "./icons";
 import { CONCERNS } from "@/lib/concerns";
+import { catalogHref } from "@/lib/sections";
 
-function href(q: CatalogQuery, patch: Partial<CatalogQuery>) {
-  const next = { ...q, ...patch };
-  const sp = new URLSearchParams();
-  for (const k of ["category", "brand", "concern", "q", "sort"] as const) {
-    const v = next[k];
-    if (v && !(k === "sort" && v === "default")) sp.set(k, v);
-  }
-  const s = sp.toString();
-  return s ? `/catalog?${s}` : "/catalog";
-}
+const href = (q: CatalogQuery, patch: Partial<CatalogQuery>) => catalogHref({ ...q, ...patch });
 
 export function CatalogFilters({ query, categories, brands }: { query: CatalogQuery; categories: string[]; brands: string[] }) {
   const router = useRouter();

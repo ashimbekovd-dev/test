@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { addItem, removeItem, setQty, type CartItem } from "@/lib/cart/cart";
 import { loadCart, saveCart } from "@/lib/cart/storage";
+import { track } from "@/lib/analytics";
 
 type CartApi = {
   items: CartItem[];
@@ -34,7 +35,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       items,
       ready,
       count: items.reduce((s, i) => s + i.qty, 0),
-      add: (sku, qty) => setItems((cur) => addItem(cur, sku, qty)),
+      add: (sku, qty) => {
+        setItems((cur) => addItem(cur, sku, qty));
+        track("add_to_cart", { sku });
+      },
       setQty: (sku, qty) => setItems((cur) => setQty(cur, sku, qty)),
       remove: (sku) => setItems((cur) => removeItem(cur, sku)),
       clear: () => setItems([]),

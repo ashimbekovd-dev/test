@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProductImage } from "./ProductImage";
 import type { Product } from "@/lib/products/types";
+import { categoryHref } from "@/lib/sections";
 
 const plural = (n: number) => {
   const m10 = n % 10, m100 = n % 100;
@@ -37,7 +38,7 @@ export function CategoryBento({ categories, products }: { categories: string[]; 
   };
   const tiles: Tile[] = categories.map((c) => ({
     title: c,
-    href: `/catalog?category=${encodeURIComponent(c)}`,
+    href: categoryHref(c),
     count: products.filter((p) => p.category === c).length,
     cover: coverFor(c),
     lead: LEADS[c],

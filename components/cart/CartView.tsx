@@ -6,6 +6,7 @@ import { MAX_QTY, resolveCart } from "@/lib/cart/cart";
 import { displayName, formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/products/types";
 import { buildOrderMessage, validateOrderForm, waLink, type OrderForm } from "@/lib/whatsapp";
+import { track } from "@/lib/analytics";
 import { CONTACTS, DELIVERY_FROM } from "@/lib/config";
 import { useCart } from "./CartProvider";
 import { ProductImage } from "../ProductImage";
@@ -42,6 +43,7 @@ export function CartView({ products }: { products: Product[] }) {
     if (errs.name) return nameRef.current?.focus();
     if (errs.address) return addressRef.current?.focus();
     if (count === 0) return;
+    track("order_whatsapp", { value: total });
     window.open(waLink(buildOrderMessage(lines, total, form)), "_blank", "noopener");
   };
 

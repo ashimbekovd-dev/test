@@ -13,6 +13,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbJsonLd, productJsonLd, shortDescription, videoJsonLd } from "@/lib/seo";
 import { productSeoDescription } from "@/lib/seo-pages";
 import { formatPrice } from "@/lib/format";
+import { categoryHref } from "@/lib/sections";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
@@ -72,7 +73,7 @@ export default async function ProductPage({ params }: Props) {
         data={breadcrumbJsonLd([
           { name: "Главная", path: "/" },
           { name: "Каталог", path: "/catalog" },
-          { name: product.category, path: `/catalog?category=${encodeURIComponent(product.category)}` },
+          { name: product.category, path: categoryHref(product.category) },
           { name, path: `/product/${encodeURIComponent(product.sku)}` },
         ])}
       />
@@ -80,7 +81,7 @@ export default async function ProductPage({ params }: Props) {
       <nav aria-label="Навигация" className="text-[13px] text-mute">
         <Link href="/catalog" className="hover:text-ink">Каталог</Link>
         <span aria-hidden> / </span>
-        <Link href={`/catalog?category=${encodeURIComponent(product.category)}`} className="hover:text-ink">{product.category}</Link>
+        <Link href={categoryHref(product.category)} className="hover:text-ink">{product.category}</Link>
       </nav>
 
       <div className="mt-6 grid gap-10 md:grid-cols-2 md:gap-16">

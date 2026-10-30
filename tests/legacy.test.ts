@@ -26,6 +26,6 @@ describe("старые адреса Tilda", () => {
     expect(legacySearchUrl("527867343-631622097751-beausta-cicarecipe-toner")).toBe("/catalog?q=beausta%20cicarecipe%20toner");
   });
   it("разделы ведут на существующие страницы", () => {
-    for (const to of Object.values(LEGACY_PAGES)) expect(to).toMatch(/^\/(catalog|about|quiz|#lines)?/);
+    for (const to of Object.values(LEGACY_PAGES)) expect(to).toMatch(/^\/(catalog|about|quiz|uhodovie)?$/);
   });
 });
