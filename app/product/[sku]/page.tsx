@@ -9,6 +9,8 @@ import { TrustStrip } from "@/components/TrustStrip";
 import { RichText } from "@/components/RichText";
 import { HowToVideo } from "@/components/HowToVideo";
 import { videoFor } from "@/lib/videos";
+import { JsonLd } from "@/components/JsonLd";
+import { productJsonLd, shortDescription } from "@/lib/seo";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { casesFor } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
@@ -32,11 +34,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = await getProduct(decodeURIComponent((await params).sku));
   if (!p) return {};
-  const description = p.nameRu ?? p.description?.split("\n")[0];
+  const description = shortDescription(p);
+  const path = `/product/${encodeURIComponent(p.sku)}`;
   return {
-    title: displayName(p.name),
+    title: p.nameRu ? `${displayName(p.name)} — ${p.nameRu.toLowerCase()}` : displayName(p.name),
     description,
-    openGraph: { title: `${displayName(p.name)} — PIYOL'`, description, images: [{ url: p.images[0] }] },
+    alternates: { canonical: path },
+    openGraph: { title: `${displayName(p.name)} — PIYOL'`, description, url: path, images: [{ url: p.images[0] }] },
   };
 }
 
@@ -61,6 +65,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="wrap pt-6 md:pt-10">
+      <JsonLd data={productJsonLd(product, reviews.own ? reviews.reviews : [])} />
       <nav aria-label="Навигация" className="text-[13px] text-mute">
         <Link href="/catalog" className="hover:text-ink">Каталог</Link>
         <span aria-hidden> / </span>

@@ -6,11 +6,12 @@ import { CartProvider } from "@/components/cart/CartProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { default: "PIYOL' — корейская косметика в Алматы", template: "%s — PIYOL'" },
   description: "Каталог корейской косметики PIYOL'. Заказ в WhatsApp, самовывоз из магазина в Алматы.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://test-one-beta-67.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "ru_RU",

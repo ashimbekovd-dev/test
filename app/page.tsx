@@ -11,6 +11,8 @@ import { CategoryBento } from "@/components/CategoryBento";
 import { BeforeAfterGallery } from "@/components/BeforeAfter";
 import { CASES } from "@/lib/cases";
 import { KaspiReviews } from "@/components/KaspiReviews";
+import { JsonLd } from "@/components/JsonLd";
+import { storeJsonLd } from "@/lib/seo";
 import { allReviews, REVIEW_SHOTS } from "@/lib/reviews";
 
 export const revalidate = 300;
@@ -23,6 +25,7 @@ export default async function Home() {
 
   return (
     <>
+      <JsonLd data={storeJsonLd()} />
       <section className="wrap grid items-end gap-8 pt-10 md:grid-cols-[1.1fr_0.9fr] md:pt-16">
         <div className="pb-4 md:pb-16">
           <h1 className="text-[52px] leading-[0.95] sm:text-[72px] lg:text-[84px] xl:text-[92px]"><span className="lg:block lg:whitespace-nowrap">Системный уход.</span> <span className="lg:block lg:whitespace-nowrap">Научный подход.</span></h1>

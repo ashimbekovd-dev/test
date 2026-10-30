@@ -131,3 +131,12 @@ test("видео «Как применять» в карточке товара"
   await page.goto("/product/ACTIVE-HYDRA-MOIST-CLEANSING-FOAM");
   await expect(page.locator("video")).toHaveCount(0);
 });
+
+test("старые ссылки Tilda ведут на новые страницы", async ({ page }) => {
+  await page.goto("/uhodovie/tproduct/527865594-151206922981-piyol-active-hydra-moist-serum");
+  await expect(page).toHaveURL(/\/product\/ACTIVE-HYDRA-MOIST-SERUM$/);
+  await page.goto("/piyol");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Космецевтика PIYOL'");
+  const res = await page.goto("/no-such-page");
+  expect(res?.status()).toBe(404);
+});
